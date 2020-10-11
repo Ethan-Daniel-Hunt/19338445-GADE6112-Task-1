@@ -1,0 +1,10 @@
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\bin\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.exe.config
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\bin\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.exe
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\bin\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.pdb
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.csprojAssemblyReference.cache
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\_19338445_Ethan_Daniel_Hunt_GADE5111_Take_Home_Exam.Form1.resources
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\_19338445_Ethan_Daniel_Hunt_GADE5111_Take_Home_Exam.Minesweeper.resources
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\_19338445_Ethan_Daniel_Hunt_GADE5111_Take_Home_Exam.Properties.Resources.resources
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.csproj.GenerateResource.cache
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.exe
+C:\Users\Ethan\source\repos\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam\obj\Debug\19338445 Ethan Daniel Hunt GADE5111 Take Home Exam.pdb
