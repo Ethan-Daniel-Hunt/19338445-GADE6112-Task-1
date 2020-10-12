@@ -35,10 +35,16 @@
             this.a_lable = new System.Windows.Forms.Label();
             this.enemy_list = new System.Windows.Forms.ComboBox();
             this.attack_enemy_button = new System.Windows.Forms.Button();
-            this.pick_up_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.hero_gold_label = new System.Windows.Forms.Label();
             this.hero_health_label = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.enemy_health_label = new System.Windows.Forms.Label();
+            this.hero_damage_label = new System.Windows.Forms.Label();
+            this.enemy_damage_label = new System.Windows.Forms.Label();
+            this.enemy_type_label = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.hero_position_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // user_controlls_lable
@@ -104,7 +110,7 @@
             this.enemy_list.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.enemy_list.FormattingEnabled = true;
             this.enemy_list.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.enemy_list.Location = new System.Drawing.Point(570, 207);
+            this.enemy_list.Location = new System.Drawing.Point(575, 237);
             this.enemy_list.Name = "enemy_list";
             this.enemy_list.Size = new System.Drawing.Size(213, 21);
             this.enemy_list.TabIndex = 5;
@@ -123,25 +129,12 @@
             this.attack_enemy_button.UseVisualStyleBackColor = false;
             this.attack_enemy_button.Click += new System.EventHandler(this.attack_enemy_button_Click);
             // 
-            // pick_up_button
-            // 
-            this.pick_up_button.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pick_up_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.pick_up_button.ForeColor = System.Drawing.Color.Yellow;
-            this.pick_up_button.Location = new System.Drawing.Point(473, 73);
-            this.pick_up_button.Name = "pick_up_button";
-            this.pick_up_button.Size = new System.Drawing.Size(114, 40);
-            this.pick_up_button.TabIndex = 7;
-            this.pick_up_button.Text = "Pick Up";
-            this.pick_up_button.UseVisualStyleBackColor = false;
-            this.pick_up_button.Click += new System.EventHandler(this.pick_up_button_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label1.ForeColor = System.Drawing.Color.Blue;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(794, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(143, 31);
@@ -170,16 +163,100 @@
             this.hero_health_label.TabIndex = 10;
             this.hero_health_label.Text = "Health: _";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(794, 185);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(168, 31);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Enemy Stats";
+            // 
+            // enemy_health_label
+            // 
+            this.enemy_health_label.AutoSize = true;
+            this.enemy_health_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.enemy_health_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.enemy_health_label.Location = new System.Drawing.Point(794, 216);
+            this.enemy_health_label.Name = "enemy_health_label";
+            this.enemy_health_label.Size = new System.Drawing.Size(123, 31);
+            this.enemy_health_label.TabIndex = 12;
+            this.enemy_health_label.Text = "Health: _";
+            // 
+            // hero_damage_label
+            // 
+            this.hero_damage_label.AutoSize = true;
+            this.hero_damage_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.hero_damage_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.hero_damage_label.Location = new System.Drawing.Point(794, 113);
+            this.hero_damage_label.Name = "hero_damage_label";
+            this.hero_damage_label.Size = new System.Drawing.Size(146, 31);
+            this.hero_damage_label.TabIndex = 13;
+            this.hero_damage_label.Text = "Damage: _";
+            // 
+            // enemy_damage_label
+            // 
+            this.enemy_damage_label.AutoSize = true;
+            this.enemy_damage_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.enemy_damage_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.enemy_damage_label.Location = new System.Drawing.Point(794, 247);
+            this.enemy_damage_label.Name = "enemy_damage_label";
+            this.enemy_damage_label.Size = new System.Drawing.Size(146, 31);
+            this.enemy_damage_label.TabIndex = 14;
+            this.enemy_damage_label.Text = "Damage: _";
+            // 
+            // enemy_type_label
+            // 
+            this.enemy_type_label.AutoSize = true;
+            this.enemy_type_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.enemy_type_label.ForeColor = System.Drawing.Color.Lime;
+            this.enemy_type_label.Location = new System.Drawing.Point(794, 278);
+            this.enemy_type_label.Name = "enemy_type_label";
+            this.enemy_type_label.Size = new System.Drawing.Size(105, 31);
+            this.enemy_type_label.TabIndex = 15;
+            this.enemy_type_label.Text = "Type: _";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F);
+            this.label3.Location = new System.Drawing.Point(576, 204);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(212, 30);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Enemy Selection:";
+            // 
+            // hero_position_label
+            // 
+            this.hero_position_label.AutoSize = true;
+            this.hero_position_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.hero_position_label.ForeColor = System.Drawing.Color.White;
+            this.hero_position_label.Location = new System.Drawing.Point(794, 144);
+            this.hero_position_label.Name = "hero_position_label";
+            this.hero_position_label.Size = new System.Drawing.Size(170, 31);
+            this.hero_position_label.TabIndex = 17;
+            this.hero_position_label.Text = "Location: _:_";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowText;
-            this.ClientSize = new System.Drawing.Size(1010, 450);
+            this.ClientSize = new System.Drawing.Size(1036, 450);
+            this.Controls.Add(this.hero_position_label);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.enemy_type_label);
+            this.Controls.Add(this.enemy_damage_label);
+            this.Controls.Add(this.hero_damage_label);
+            this.Controls.Add(this.enemy_health_label);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.hero_health_label);
             this.Controls.Add(this.hero_gold_label);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pick_up_button);
             this.Controls.Add(this.attack_enemy_button);
             this.Controls.Add(this.enemy_list);
             this.Controls.Add(this.a_lable);
@@ -206,10 +283,16 @@
         private System.Windows.Forms.Label a_lable;
         private System.Windows.Forms.ComboBox enemy_list;
         private System.Windows.Forms.Button attack_enemy_button;
-        private System.Windows.Forms.Button pick_up_button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label hero_gold_label;
         private System.Windows.Forms.Label hero_health_label;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label enemy_health_label;
+        private System.Windows.Forms.Label hero_damage_label;
+        private System.Windows.Forms.Label enemy_damage_label;
+        private System.Windows.Forms.Label enemy_type_label;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label hero_position_label;
     }
 }
 
