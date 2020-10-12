@@ -19,19 +19,19 @@ namespace _19338445_GADE_6112_Task_1
 
         public Hero hero_player = new Hero(1, 1, 10, 2);//instance of the Hero object
 
-        public Map game_map = new Map(/*num enemies ->*/2, 4, 8, 18, 8, 18);//instance of the Mao object
+        public Map game_map = new Map(/*num enemies ->*/2,/*num items ->*/ 4, 8, 18, 8, 18);//instance of the Map object
 
 
 
 
-        public int total_hero_gold;
+        public int total_hero_gold;// the integer to represent the total amount of matha fuckin gold we have #ballin
 
 
         public List<Label> la = new List<Label>();//Label list of all labels used to display the map
 
         public bool user_selected_item;
 
-        int enemy_index_selected;
+        int enemy_index_selected;//the int to represent the enemy index we selceted
 
 
         public Form1()
@@ -53,9 +53,7 @@ namespace _19338445_GADE_6112_Task_1
         void SelectEnemy()//select enemy inisializes the drop down list with the enemies array
         {
 
-            enemy_list.Items.AddRange(game_map.enemies);
-
-            MessageBox.Show("selected enemy called");
+            enemy_list.Items.AddRange(game_map.enemies);//adds the enemies array in game map to the enemy list on the form
 
         }
 
@@ -80,31 +78,31 @@ namespace _19338445_GADE_6112_Task_1
 
         }
 
-        void DisplayStats ()
+        void DisplayStats ()// display all the states of the selected enemy and the hero
         {
 
-            hero_health_label.Text = string.Format("Health: {0}/{1}", hero_player.current_hp ,  hero_player.max_hp);
+            hero_health_label.Text = string.Format("Health: {0}/{1}", hero_player.current_hp ,  hero_player.max_hp);// display hero health
 
-            total_hero_gold = 0;
+            total_hero_gold = 0;//reset gold
 
-            total_hero_gold = hero_player.hero_gold.Sum();
+            total_hero_gold = hero_player.hero_gold.Sum();//assign the sum of all gold in the hero gold list
 
-            hero_gold_label.Text = string.Format("Gold: {0}", total_hero_gold);
+            hero_gold_label.Text = string.Format("Gold: {0}", total_hero_gold);// display gold
 
-            hero_damage_label.Text = string.Format("Damage: {0}", hero_player.damage);
+            hero_damage_label.Text = string.Format("Damage: {0}", hero_player.damage);// display hero damage
 
             hero_position_label.Text = string.Format("Location: {0}:{1}", hero_player.x, hero_player.y);
 
 
-            enemy_index_selected = enemy_list.SelectedIndex;
+            enemy_index_selected = enemy_list.SelectedIndex;//assign the selected enemy index
 
-            if (enemy_index_selected != -1) {
+            if (enemy_index_selected != -1) {// if we have selected an enemy
 
-                enemy_health_label.Text = string.Format("Health: {0}/{1}", game_map.enemies[enemy_index_selected].max_hp, game_map.enemies[enemy_index_selected].current_hp);
+                enemy_health_label.Text = string.Format("Health: {0}/{1}", game_map.enemies[enemy_index_selected].max_hp, game_map.enemies[enemy_index_selected].current_hp);// displa enemy health
 
-                enemy_damage_label.Text = string.Format("Damage: {0}", game_map.enemies[enemy_index_selected].damage);
+                enemy_damage_label.Text = string.Format("Damage: {0}", game_map.enemies[enemy_index_selected].damage);// display enemy damage
 
-                enemy_type_label.Text = string.Format("Type: {0}", game_map.enemies[enemy_index_selected].enemy_id);
+                enemy_type_label.Text = string.Format("Type: {0}", game_map.enemies[enemy_index_selected].enemy_id);// display enemy type
             }
 
             UpdateMap();//update the map
@@ -279,7 +277,7 @@ namespace _19338445_GADE_6112_Task_1
 
             enemy_index_selected = enemy_list.SelectedIndex;//get the index of the selcted item and assign it to a local variable to be used
 
-            hero_player.Game_Tiles = game_tiles;
+            hero_player.Game_Tiles = game_tiles;//set the game tiles in the hero class to the game_tile her in the game engine class
 
 
 
@@ -404,11 +402,8 @@ namespace _19338445_GADE_6112_Task_1
 
                         if (la[li].Left == SelectedEnemyData(enemy_index_selected).Item1 && la[li].Top == SelectedEnemyData(enemy_index_selected).Item2)//of the lable is associated with the selected enemy if so highlight it for the user to see
                         {
-
                             la[li].ForeColor = Color.Black;//set the front colour(the colour of the text)
                             la[li].BackColor = Color.White;//set the background colour of the lable
-
-
                         }
                     }
 
@@ -428,16 +423,10 @@ namespace _19338445_GADE_6112_Task_1
 
             for (int i = 0; i <= la.Count - 1; i++)//loop through every lable in the lable list
             {
-
-                //Console.WriteLine("delete lable at this index" + i);
-
                 this.Controls.Remove(la[i]);//delete the lable from the form at th current index of the loop
-
-
             }
 
             la.Clear();//clear the lable array, remove all its data
-
 
         }
 
@@ -450,13 +439,13 @@ namespace _19338445_GADE_6112_Task_1
 
             game_map.hero = hero_player;//update the hero instance in the Map class as movement has changed 
 
-            hero_player.PickUpItem(game_map.GetItemAtPosition(hero_player.x,hero_player.y));
+            hero_player.PickUpItem(game_map.GetItemAtPosition(hero_player.x,hero_player.y));//call pick item and give it the get item at position with the heros x and y values 
 
 
 
-            game_map.UpdateEnemies();
+            game_map.UpdateEnemies();//update da enemies
 
-            EnemyAttack(true);
+            EnemyAttack(true);//calllllllllll enemy attack....ghuifityuifvuiyhfdcuykg9op
 
             UpdateMap();//update the map
 
@@ -541,54 +530,55 @@ namespace _19338445_GADE_6112_Task_1
             enemy_x *= 20;
             enemy_y *= 20;
 
-
            return (enemy_x, enemy_y);
            
         }
 
         public void EnemyAttack (bool hero_stationary)
         {
-            if (hero_stationary == true)
+            if (hero_stationary == true)//if we are not movin
             {
 
-                for (int i = 0; i <= game_map.enemies.Length -1;i++)
+                for (int i = 0; i <= game_map.enemies.Length -1;i++)//loop through the enemies array
                 {
 
-                    if (game_map.enemies[i].enemy_id == "goblin") {
+                    if (game_map.enemies[i].enemy_id == "goblin") {//if the current enemy is a goblin
 
 
-                        bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
+                        bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);//assign the chech range bool to a local variable
 
-                        if (goblin_attack == true)
+                        if (goblin_attack == true)//if the giblin is on range
                         {
-                            hero_player.current_hp -= game_map.enemies[i].damage;
+                            hero_player.current_hp -= game_map.enemies[i].damage;//he/she/they what ever it identifies as will subtracts its damage from the heros health
 
-                            MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));
+                            MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));//display what just went down bruv
 
-                            DisplayStats();
+                            DisplayStats();//call this thing cause update values of character things... yeah
                         }
                        
 
                     }else if (game_map.enemies[i].enemy_id == "mage")
                     {
-                        for (int j = 0; j <= game_map.enemies.Length - 1; j++)
+                        for (int j = 0; j <= game_map.enemies.Length - 1; j++)//do a seperate loop through the enemies array
                         {
-                            bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);
+                            bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);//check the range from the mage to what ever enemy is the current
 
                             Console.WriteLine(string.Format ("enemy x {0} , y {1}" , game_map.enemies[j].x, game_map.enemies[j].y));
 
                             Console.WriteLine(string.Format("my enemy x {0} , y {1}", game_map.enemies[i].x, game_map.enemies[i].y));
 
-                            if (mage_attack_enemy == true)
+                            if (mage_attack_enemy == true)//if the mage is in range
                             {
-                                game_map.enemies[j].current_hp -= game_map.enemies[i].damage;
+                                game_map.enemies[j].current_hp -= game_map.enemies[i].damage;//subtract the mage damage from the enemy current hp
 
-                                MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));
+                                MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));//show that we hit
 
-                                DisplayStats();
+                                DisplayStats();//call display states cause gotta show that updates stats..............................
                             }
                         }
 
+
+                        //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN---------------------------
 
                         bool mage_attack_hero = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
 
@@ -601,11 +591,14 @@ namespace _19338445_GADE_6112_Task_1
                             DisplayStats();
                         }
 
+                        //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN--------------------------
                     }
                 }
             }
-            else if (hero_stationary == false)
+            else if (hero_stationary == false)//if we aret moving and its after player attack
             {
+
+                //-------------------------------------------------------SAME AS ABOVE BUT JUST FIRES AFTER WE ATTACK-------------------------------------------------------------
 
                 for (int i = 0; i <= game_map.enemies.Length - 1; i++)
                 {
@@ -659,6 +652,8 @@ namespace _19338445_GADE_6112_Task_1
                             DisplayStats();
                         }
 
+
+                        //-------------------------------------------------------SAME AS ABOVE BUT JUST FIRES AFTER WE ATTACK-------------------------------------------------------------
                     }
                 }
             }
@@ -668,33 +663,33 @@ namespace _19338445_GADE_6112_Task_1
 
         }
 
-        private void attack_enemy_button_Click(object sender, EventArgs e)
+        private void attack_enemy_button_Click(object sender, EventArgs e)//method called when we press t he attack button
         {
 
             enemy_index_selected = enemy_list.SelectedIndex;//get the index of the selcted item and assign it to a local variable to be used
 
-            if (enemy_index_selected != -1)
+            if (enemy_index_selected != -1)//if the enemy selected index is not -1 i.e we havent selected an enemy
             {
 
-                bool attack_check = hero_player.CheckRange((1, 1), game_map.enemies[enemy_index_selected], hero_player);
+                bool attack_check = hero_player.CheckRange((1, 1), game_map.enemies[enemy_index_selected], hero_player);//call the check range bool and store it
 
 
-                if (attack_check == true)
+                if (attack_check == true)//if we are in range
                 {
 
-                    game_map.enemies[enemy_index_selected].current_hp -= hero_player.damage;
+                    game_map.enemies[enemy_index_selected].current_hp -= hero_player.damage;//subtract the selected enemy curremt health by hero damage
 
                     
-                    MessageBox.Show(string.Format ("Attack hit {0} for {1} damage!" , game_map.enemies[enemy_index_selected].enemy_id, hero_player.damage));
+                    MessageBox.Show(string.Format ("Attack hit {0} for {1} damage!" , game_map.enemies[enemy_index_selected].enemy_id, hero_player.damage));//display that we hit
 
                     DisplayStats();
 
                 }
-                else if (attack_check == false) { MessageBox.Show(string.Format("Attack missed {0}. Out of range.", game_map.enemies[enemy_index_selected].enemy_id)); }
+                else if (attack_check == false) { MessageBox.Show(string.Format("Attack missed {0}. Out of range.", game_map.enemies[enemy_index_selected].enemy_id));/*display that we missed*/ }
             }else { MessageBox.Show("No enemy selected for attacking! Please select an enemy."); }
 
 
-            EnemyAttack(false);
+            EnemyAttack(false);//call enemy attack
 
         }
 
@@ -786,11 +781,11 @@ namespace _19338445_GADE_6112_Task_1
         public Gold (int g_x,int g_y):base (g_x,g_y)
         {
 
-            gold_amt = rand_gold.Next(1,6);
+            gold_amt = rand_gold.Next(1,6);//set ranodom gold amount
 
             gold_accsesor = gold_amt;
 
-            item_type = "gold";
+            item_type = "gold";//set the item type to gold
 
         }
 
@@ -850,8 +845,7 @@ namespace _19338445_GADE_6112_Task_1
 
         public virtual bool CheckRange((int, int) desired_range, Character tracker, Character target)//a bool method that checks if we are in range of a target
         {
-            bool in_range;
-
+            bool in_range;//bool to represent whether we are in the specified range
 
 
             (int, int) distance;//int to store the distance calculated in DistanceTo
@@ -917,23 +911,23 @@ namespace _19338445_GADE_6112_Task_1
         public override void ReturnMove(Movement move) { }
 
 
-        public void CharacterVision()
+        public void CharacterVision()//the method that assignes the charactar vision array
         {
 
 
-            charactar_vision = new Tile[x_size, y_size];
+            charactar_vision = new Tile[x_size, y_size];//set the size of the array
 
             for (int x = 0; x <= x_size - 1; x++)
             {
                 for (int y = 0; y <= y_size - 1; y++)
                 {
-                    if (map_tiles[x, y].tile_type == TileType.Air)
+                    if (map_tiles[x, y].tile_type == TileType.Air)//if we loop through air tiles and gold tiles
                     {
 
-                        charactar_vision[x, y] = map_tiles[x, y];
+                        charactar_vision[x, y] = map_tiles[x, y];//we assign them to the character vision array
 
                     }
-                    else { charactar_vision[x, y] = null; }
+                    else { charactar_vision[x, y] = null;/*every other value in the array should be null*/ }
                 }
 
             }
@@ -1053,7 +1047,7 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-            CharacterVision();
+            CharacterVision();//call the character vision method so the assigning of the character vision array fires
 
 
             //MessageBox.Show("this is return move on goblin");
@@ -1080,13 +1074,13 @@ namespace _19338445_GADE_6112_Task_1
                 future_x -= 1;
             }
 
-            if (charactar_vision[future_x, future_y] != null)
+            if (charactar_vision[future_x, future_y] != null)//if the value we want to move to is NOT null accourding to the character vision array
             {
-                Move(move);
+                Move(move);//we return our calculates movement
 
-            } else if (charactar_vision[future_x, future_y] == null)
+            } else if (charactar_vision[future_x, future_y] == null)//if the value we want to move to IS null
             {
-                RollDirection();
+                RollDirection();//then we call for roll direction to find a new position to move to
 
             }
 
@@ -1111,9 +1105,9 @@ namespace _19338445_GADE_6112_Task_1
         public override bool CheckRange((int, int) desired_range, Character tracker, Character target)
         {
 
-            if (tracker.character_id == "hero") {
+            if (tracker.character_id == "hero") {//checking of the tracker for range is the hero
 
-                bool in_range;
+                bool in_range;//bool that will represent whether or not we are in range
 
                 (int, int) distance;//int to store the distance calculated in DistanceTo
 
@@ -1129,7 +1123,7 @@ namespace _19338445_GADE_6112_Task_1
 
                 return in_range;//return the bool calculated for
             }
-            return false;
+            return false;//if the tracker character id is not either options checked for we return false
         }
 
 
@@ -1157,12 +1151,12 @@ namespace _19338445_GADE_6112_Task_1
             character_id = "enemy";
         }
 
-        public override void ReturnMove(Movement move)
+        public override void ReturnMove(Movement move)//overwtitten return move
         {
 
-            move = Movement.NoMovement;
+            move = Movement.NoMovement;//we set the return movement value to no movement
 
-            ReturnMove(move);
+            ReturnMove(move);//we return no movement
         }
 
         private (int, int) DistanceTo(Character tracker, Character target)//a dual int method for checking the distance between two charactars
@@ -1178,12 +1172,12 @@ namespace _19338445_GADE_6112_Task_1
             return (Math.Abs(x_distance), Math.Abs(y_distance));//we return the calculated distance
         }
 
-        public override bool CheckRange((int, int) desired_range, Character tracker, Character target)
+        public override bool CheckRange((int, int) desired_range, Character tracker, Character target)//Mages check range
         {
 
-            if (tracker.character_id == "enemy" || tracker.character_id == "hero") {
+            if (tracker.character_id == "enemy" || tracker.character_id == "hero") {//checking of the tracker for range is the hero or an enemy
 
-                bool in_range;
+                bool in_range;//bool that will represent whether or not we are in range
 
                 (int, int) distance;//int to store the distance calculated in DistanceTo
 
@@ -1191,7 +1185,7 @@ namespace _19338445_GADE_6112_Task_1
 
                 //MessageBox.Show(string.Format("mage distance = x : {0} , y : {1}", distance.Item1, distance.Item2));
 
-                if (desired_range.Item1 >= distance.Item1 && desired_range.Item2 >= distance.Item2 && distance.Item1 != 0 && distance.Item2 != 0)//if the desired range on x and y is less than are equal to the distance we return true if not then we are out of range and we return false
+                if (desired_range.Item1 >= distance.Item1 && desired_range.Item2 >= distance.Item2 && distance.Item1 != 0 && distance.Item2 != 0)//if the desired range on x and y is less than are equal to the distance we return true if not then we are out of range and we return false, and checking that the range is not zero otherwise we would attack ourself
                 {
                     in_range = true;//sets the range bool to true
                 }
@@ -1201,7 +1195,7 @@ namespace _19338445_GADE_6112_Task_1
 
             }
 
-            return false;
+            return false;//if the tracker character id is not either options checked for we return false
 
         }
 
@@ -1217,9 +1211,9 @@ namespace _19338445_GADE_6112_Task_1
 
         public Tile[,] Game_Tiles;
 
-        public List<Item> hero_items = new List<Item>();
+        public List<Item> hero_items = new List<Item>();//list stores hero items
 
-        public List<int> hero_gold = new List<int>();
+        public List<int> hero_gold = new List<int>();//list stores hero gold
 
         public Hero (int hero_x, int hero_y, int hero_max_hp, int hero_damage)//constructor recieves and sets, yeah yeah... 
         {
@@ -1237,21 +1231,21 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-        public void PickUpItem(Item item)
+        public void PickUpItem(Item item)//method that allows is to add an item to the characters inventory
         {
             if (item != null) {
 
                 hero_items.Clear();
 
-                hero_items.Add(item);
+                hero_items.Add(item);//add the item to the hero items inventory(List)
 
-                if (item.item_type == "gold")
+                if (item.item_type == "gold")//if the item we add is gold
                 {
                     
-                    foreach (Gold gold in hero_items)
+                    foreach (Gold gold in hero_items)//for every gold item in the hero items list
                     {
 
-                        hero_gold.Add(gold.gold_accsesor);
+                        hero_gold.Add(gold.gold_accsesor);//we add the gold amount to the hero_gold list
                     }
 
                 }
@@ -1294,21 +1288,21 @@ namespace _19338445_GADE_6112_Task_1
 
                 }
 
-        void CharacterVision()
+        void CharacterVision()//the method that assignes the charactar vision array
         {
             
-            charactar_vision = new Tile[map.x_map_size, map.y_map_size];
+            charactar_vision = new Tile[map.x_map_size, map.y_map_size];//set the size of the array
 
             for (int x = 0; x <= map.x_map_size - 1; x++)
             {
                 for (int y = 0; y <= map.y_map_size - 1; y++)
                 {
-                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold)
+                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold)//if we loop through air tiles and gold tiles
                     {
-                        charactar_vision[x, y] = Game_Tiles[x, y];
+                        charactar_vision[x, y] = Game_Tiles[x, y];//we assign them to the character vision array
 
                     }
-                    else { charactar_vision[x, y] = null; }
+                    else { charactar_vision[x, y] = null;/*every other value in the array should be null*/ }
                 }
             }
         }
@@ -1316,9 +1310,9 @@ namespace _19338445_GADE_6112_Task_1
 
         public override void ReturnMove(Movement ro_move)//a method that checks for collision and passes the final move enum back to move(☞ຈل͜ຈ)☞
         {
-            CharacterVision();
+            CharacterVision();//call the character vision method so the assigning of the character vision array fires
 
-                    int future_y = y;//this will store out predicted y
+            int future_y = y;//this will store out predicted y
 
                     int future_x = x;//this will store out predicted x
 
@@ -1342,13 +1336,13 @@ namespace _19338445_GADE_6112_Task_1
 
                     //Console.WriteLine(string.Format("future x : {0} , future y : {1}", future_x, future_y));
 
-            if (charactar_vision[future_x,future_y] != null)
+            if (charactar_vision[future_x,future_y] != null)//if the value we want to move to is NOT null accourding to the character vision array
             {
 
                 Move(ro_move);//return movement up,down,left,right
 
             }
-            else if (charactar_vision[future_x, future_y] == null)
+            else if (charactar_vision[future_x, future_y] == null)//if the value we want to move to IS null
             {
 
                 Move(Movement.NoMovement);//if not we return the NoMovement enum ┬┴┬┴┤ ͜ʖ ͡°) ├┬┴┬┴
@@ -1411,17 +1405,17 @@ namespace _19338445_GADE_6112_Task_1
             x_map_size = DecideMapSize().Item1;//actual map size x = the randomly generated map size x
             y_map_size = DecideMapSize().Item2;//actual map size y = the randomly generated map size y
 
-            enemies = Enemies();
+            enemies = Enemies();//assign the enemies array
 
-            items = Items();
+            items = Items();//assign the items array
             
 
         }
 
-        public void SetUpMapComponents ()
+        public void SetUpMapComponents ()//sets up map components
         {
 
-            generated_map = GenMap();
+            generated_map = GenMap();//assign gen map to generated map
         }
         
 
@@ -1462,36 +1456,37 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-        Item[] Items ()
+        Item[] Items ()//items method that adds items to the map
         {
-            Item[] items = new Item[item_amt];
+            Item[] items = new Item[item_amt];//create the items array and set its size
 
-            for (int i = 0; i <= item_amt - 1; i++)
+            for (int i = 0; i <= item_amt - 1; i++)//loop through every item
             {
-                items[i] = new Gold(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);
+               
+
+                    items[i] = new Gold(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);//add gold to the items array at a random position
+                
             }
-                return items;
+                return items;//return the items array
         }
 
-        public Item GetItemAtPosition(int i_x, int i_y)
+        public Item GetItemAtPosition(int i_x, int i_y)//Item method that gets an item at a given position and then returns the item
         {
 
-            Item added_item;
+            Item added_item;//local variable to store the item
 
-
-
-            for (int i = 0; i <= items.Length - 1; i++)
+            for (int i = 0; i <= items.Length - 1; i++)//loop through the items array
             {
 
-                if (items[i] != null) {
+                if (items[i] != null)/*if the current item is not null*/ {
 
-                    if (items[i].x == i_x && items[i].y == i_y)
+                    if (items[i].x == i_x && items[i].y == i_y)//check if the items position is = to the position we specified
                     {
-                        added_item = items[i];
+                        added_item = items[i];//grab the item and store it in the local variable
 
-                        items[i] = null;
+                        items[i] = null;//remove that item we just got by settings its value to null
 
-                        return added_item;
+                        return added_item;//return the local item variable
 
                     }
                 }
@@ -1590,15 +1585,15 @@ namespace _19338445_GADE_6112_Task_1
              //Console.WriteLine(string.Format ("enemy added/updated @ x : {0} , y : {1}" , enemies[i].x, enemies[i].y));
             }
 
-            for (int i = 0; i <= item_amt - 1; i++)
+            for (int i = 0; i <= item_amt - 1; i++)//loop through items array
             {
 
-                if (items[i] != null)
+                if (items[i] != null && items[i].item_type == "gold")//if the current item is not null and its a gold item
                 {
-                    tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Gold);
-                }else if (items[i] != null)
+                    tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Gold);//we add the gold to the map
+                }else if (items[i] != null)//else
                 {
-                    tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Air);
+                    tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Air);//we add an air tile instead
                 }
             }
 
@@ -1652,4 +1647,4 @@ namespace _19338445_GADE_6112_Task_1
 
         }
 
-}//19338445 Ethan Daniel Hunt, my fingers hurt ಠ_ಠ
+}//19338445 Ethan Daniel Hunt, my fingers dont hurt as much (¬‿¬)
