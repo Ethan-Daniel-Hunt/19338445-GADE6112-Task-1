@@ -1,0 +1,9 @@
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\bin\Debug\19338445 GADE 6112 Task 1.exe.config
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\bin\Debug\19338445 GADE 6112 Task 1.exe
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\bin\Debug\19338445 GADE 6112 Task 1.pdb
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\19338445 GADE 6112 Task 1.csprojAssemblyReference.cache
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\_19338445_GADE_6112_Task_1.Form1.resources
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\_19338445_GADE_6112_Task_1.Properties.Resources.resources
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\19338445 GADE 6112 Task 1.csproj.GenerateResource.cache
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\19338445 GADE 6112 Task 1.exe
+C:\Users\Ethan\source\repos\19338445 GADE 6112 Task 1\obj\Debug\19338445 GADE 6112 Task 1.pdb
