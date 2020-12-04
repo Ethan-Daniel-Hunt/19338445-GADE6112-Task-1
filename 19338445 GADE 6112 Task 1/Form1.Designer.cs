@@ -50,6 +50,10 @@
             this.hero_weapon_durability = new System.Windows.Forms.Label();
             this.enemy_weapon_durability = new System.Windows.Forms.Label();
             this.hero_weapon_range = new System.Windows.Forms.Label();
+            this.shop_sign_lable = new System.Windows.Forms.Label();
+            this.shop_items_list = new System.Windows.Forms.ComboBox();
+            this.display_weapon_message = new System.Windows.Forms.Label();
+            this.buy_item_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // user_controlls_lable
@@ -301,12 +305,64 @@
             this.hero_weapon_range.TabIndex = 22;
             this.hero_weapon_range.Text = "Range:_";
             // 
+            // shop_sign_lable
+            // 
+            this.shop_sign_lable.AutoSize = true;
+            this.shop_sign_lable.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.shop_sign_lable.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F);
+            this.shop_sign_lable.Location = new System.Drawing.Point(801, 471);
+            this.shop_sign_lable.Name = "shop_sign_lable";
+            this.shop_sign_lable.Size = new System.Drawing.Size(72, 30);
+            this.shop_sign_lable.TabIndex = 24;
+            this.shop_sign_lable.Text = "Shop";
+            // 
+            // shop_items_list
+            // 
+            this.shop_items_list.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.shop_items_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.shop_items_list.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.shop_items_list.FormattingEnabled = true;
+            this.shop_items_list.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.shop_items_list.Location = new System.Drawing.Point(800, 504);
+            this.shop_items_list.Name = "shop_items_list";
+            this.shop_items_list.Size = new System.Drawing.Size(245, 21);
+            this.shop_items_list.TabIndex = 23;
+            this.shop_items_list.SelectedIndexChanged += new System.EventHandler(this.shop_items_list_SelectedIndexChanged);
+            // 
+            // display_weapon_message
+            // 
+            this.display_weapon_message.AutoSize = true;
+            this.display_weapon_message.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.display_weapon_message.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.display_weapon_message.Location = new System.Drawing.Point(879, 475);
+            this.display_weapon_message.Name = "display_weapon_message";
+            this.display_weapon_message.Size = new System.Drawing.Size(27, 25);
+            this.display_weapon_message.TabIndex = 25;
+            this.display_weapon_message.Text = "...";
+            // 
+            // buy_item_button
+            // 
+            this.buy_item_button.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buy_item_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.buy_item_button.ForeColor = System.Drawing.Color.Yellow;
+            this.buy_item_button.Location = new System.Drawing.Point(680, 471);
+            this.buy_item_button.Name = "buy_item_button";
+            this.buy_item_button.Size = new System.Drawing.Size(114, 54);
+            this.buy_item_button.TabIndex = 26;
+            this.buy_item_button.Text = "Buy";
+            this.buy_item_button.UseVisualStyleBackColor = false;
+            this.buy_item_button.Click += new System.EventHandler(this.buy_item_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowText;
-            this.ClientSize = new System.Drawing.Size(1124, 508);
+            this.ClientSize = new System.Drawing.Size(1124, 665);
+            this.Controls.Add(this.buy_item_button);
+            this.Controls.Add(this.display_weapon_message);
+            this.Controls.Add(this.shop_sign_lable);
+            this.Controls.Add(this.shop_items_list);
             this.Controls.Add(this.hero_weapon_range);
             this.Controls.Add(this.enemy_weapon_durability);
             this.Controls.Add(this.hero_weapon_durability);
@@ -363,6 +419,10 @@
         private System.Windows.Forms.Label hero_weapon_durability;
         private System.Windows.Forms.Label enemy_weapon_durability;
         private System.Windows.Forms.Label hero_weapon_range;
+        private System.Windows.Forms.Label shop_sign_lable;
+        private System.Windows.Forms.ComboBox shop_items_list;
+        private System.Windows.Forms.Label display_weapon_message;
+        private System.Windows.Forms.Button buy_item_button;
     }
 }
 

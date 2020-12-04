@@ -20,7 +20,7 @@ namespace _19338445_GADE_6112_Task_1
 
         public Hero hero_player = new Hero(1, 1, 10, 2);//instance of the Hero object
 
-        public Map game_map = new Map(/*num enemies ->*/2,/*num items ->*/ 6, 15, 18, 15, 18);//instance of the Map object
+        public Map game_map = new Map(/*num enemies ->*/3,/*num items ->*/ 6, 15, 18, 15, 18);//instance of the Map object
 
 
 
@@ -33,6 +33,8 @@ namespace _19338445_GADE_6112_Task_1
         public bool user_selected_item;
 
         int enemy_index_selected;//the int to represent the enemy index we selceted
+
+        Shop shop;
 
 
         public Form1()
@@ -69,9 +71,11 @@ namespace _19338445_GADE_6112_Task_1
 
             game_map.hero = hero_player;// set the instance of the hero object in the Map class to the one declaired here in game engine
 
-            
+            shop = new Shop(hero_player);
 
             game_map.SetUpMapComponents();
+
+            shop_items_list.Items.AddRange(shop.shop_weapons);
             
 
             DisplayMap();//Call the DisplayMap method 
@@ -342,6 +346,22 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Text = "R";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Leader)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Red;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
 
                     if (user_selected_item == true) {
 
@@ -538,7 +558,6 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
-
                     else if (game_tiles[x, y].tile_type == Tile.TileType.Longbow)//checking if game_tiles at the current index is of tile type player
                     {
 
@@ -555,7 +574,6 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Text = "B";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
-
                     else if (game_tiles[x, y].tile_type == Tile.TileType.Rifel)//checking if game_tiles at the current index is of tile type player
                     {
 
@@ -570,6 +588,22 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
                         la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
                         la[li].Text = "R";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Leader)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Red;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
 
@@ -978,15 +1012,166 @@ namespace _19338445_GADE_6112_Task_1
 
         }
 
+        private void shop_items_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+           
+
+            if (shop_items_list.SelectedIndex > -1)
+            {
+
+                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);
+
+            }
+        }
+
+        private void buy_item_button_Click(object sender, EventArgs e)
+        {
+
+            if (shop.CanBuy(shop_items_list.SelectedIndex) == true)
+            {
+                shop.Buy(shop_items_list.SelectedIndex);
+
+                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);
+
+                DisplayStats();
+
+            }
+
+
+
+        }
+    }
+
+
+
+    public class Shop
+    {
+
+        public Weapon[] shop_weapons = new Weapon[3];
+
+        public Random random_obj;
+
+        public Character buyer;
+
+
+        public Shop(Character the_buyer)
+        {
+
+            buyer = the_buyer;
+
+            random_obj = new Random();
+
+            for (int i = 0; i <= shop_weapons.Length - 1; i++)
+            {
+                shop_weapons[i] = RandomWeapon();
+
+                Console.WriteLine(shop_weapons[i].weapon_type);
+
+            }
+        }
+
+        private Weapon RandomWeapon()
+        {
+
+           
+
+            int w_id = random_obj.Next(0, 4);
+
+            
+
+            switch (w_id)
+            {
+                case 0:
+                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger);
+                    break;
+
+                case 1:
+                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword);
+                    break;
+
+                case 2:
+                    return new RangedWeapon(0, 0, Weapon.WeaponType.Longbow);
+                    break;
+
+                case 3:
+                    return new RangedWeapon(0, 0, Weapon.WeaponType.Rifel);
+                    break;
+
+            }
+
+            return new MeleeWeapon(0, 0, Weapon.WeaponType.BareHands);
+
+        }
+
+
+        public bool CanBuy(int weapon_index)
+        {
+
+            if (weapon_index != -1)
+            {
+
+              
+
+
+                if (shop_weapons[weapon_index].cost_p <= buyer.gold_amt)
+                {
+
+
+                    MessageBox.Show("Can buy this weapon");
+
+                    return true;
+
+
+
+                }
+                else
+                {
+
+                    MessageBox.Show("Can't buy this weapon");
+
+                    return false;
+                }
+
+            }
+
+
+            return false;
+
+        }
+
+
+        public void Buy (int weapon_index)
+        {
+            buyer.gold_amt -= shop_weapons[weapon_index].cost_p;
+
+            buyer.Equip(shop_weapons[weapon_index]);
+
+            shop_weapons[weapon_index] = RandomWeapon();
+
+            MessageBox.Show("Bought weapon.");
+
+        }
+
+
+
+        public string DisplayString (int weapon_index)
+        {
+            return string.Format("Buy {0} for {1} Gold", shop_weapons[weapon_index].weapon_type, shop_weapons[weapon_index].cost_p);
+
+        }
 
     }
 
 
 
+
+
+
+
     public class Tile/*the tile base class the defines what all tiles are at a base level, all classes exept from Map and game engine will inherit from this class*/ {
 
-        public enum TileType {Player, Air, Wall, Goblin, Mage, Gold, Dagger, Longsword, Longbow, Rifel};//an enum to store the tiles type, used for checking and assigning tiles in game engine
+        public enum TileType {Player, Air, Wall, Goblin, Mage, Leader, Gold, Dagger, Longsword, Longbow, Rifel};//an enum to store the tiles type, used for checking and assigning tiles in game engine
 
         public int x;//an int to store the x position of the tile
         public int y;//an int to store the y position of the tile
@@ -1291,6 +1476,8 @@ namespace _19338445_GADE_6112_Task_1
         public string character_id;
 
         public Weapon weapon;
+
+        public int gold_amt;
 
 
         public void Equip (Weapon w)
@@ -1722,7 +1909,173 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-        public class Hero : Character//the HERO ᕦ(ò_óˇ)ᕤ object that handles player controll, it derives from character... cause we wanna move..........
+
+
+    public class Leader : Enemy//the goblin subclass of enemy
+    {
+
+        int leader_damage = 1;
+        int leader_health = 10;
+
+        public Leader(int g_x, int g_y) : base(g_x, g_y)//set out hp, damage positions from recieved values you know how it goes...
+        {
+            x = g_x;
+            y = g_y;
+
+            damage = leader_damage;
+            max_hp = leader_health;
+            current_hp = leader_health;
+
+            enemy_id = "leader";
+
+            character_id = "enemy";
+
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));
+        }
+
+        
+
+
+        public (int, int) LeaderMovement()//(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ TRIPPLE!!! int method that that returns a predicted x and y as well as a direction id
+        {
+
+
+
+            // MessageBox.Show("this is roll direction");
+
+
+            int future_y = y;
+
+            int future_x = x;
+
+            int direction_id = random_enemys_amt.Next(0, 4);//gen a random direction
+
+
+
+
+            switch (direction_id)
+            {
+                case 0:
+                    future_y -= 1;/*Up*/ReturnMove(Movement.Up); //predict position based on direction id
+                    break;
+
+                case 1:
+                    future_y += 1;/*Down*/ReturnMove(Movement.Down); //predict position based on direction id
+                    break;
+
+                case 2:
+                    future_x -= 1;/*Left*/ReturnMove(Movement.Left); //predict position based on direction id
+                    break;
+
+                case 3:
+                    future_x += 1;/*Right*/ReturnMove(Movement.Right); //predict position based on direction id
+                    break;
+            }
+
+
+            return (future_x, future_y);//return da calculated values(づ｡◕‿‿◕｡)づ, we gonna use'em later.
+
+
+
+        }
+
+
+        public override void ReturnMove(Movement move)//method that checks collision for enemy based on the predicted movement
+        {
+
+
+
+            CharacterVision();//call the character vision method so the assigning of the character vision array fires
+
+
+            //MessageBox.Show("this is return move on goblin");
+
+            int future_y = y;//this will store out predicted y
+
+            int future_x = x;//this will store out predicted x
+
+            if (move == Movement.Up)//if movement is up move predicted y up;
+            {
+                future_y -= 1;
+            }
+            else if (move == Movement.Down)//if movement is up move predicted y down;
+            {
+                future_y += 1;
+            }
+
+            if (move == Movement.Right)//if movement is up move predicted x right;
+            {
+                future_x += 1;
+            }
+            else if (move == Movement.Left)//if movement is up move predicted x left;
+            {
+                future_x -= 1;
+            }
+
+            if (charactar_vision[future_x, future_y] != null)//if the value we want to move to is NOT null accourding to the character vision array
+            {
+                Move(move);//we return our calculates movement
+
+            }
+            else if (charactar_vision[future_x, future_y] == null)//if the value we want to move to IS null
+            {
+                LeaderMovement();//then we call for roll direction to find a new position to move to
+
+            }
+
+
+
+        }
+
+
+        private (int, int) DistanceTo(Character tracker, Character target)//a dual int method for checking the distance between two charactars
+        {
+
+            int x_distance;
+            int y_distance;
+
+            x_distance = tracker.x - target.x;//the distance x is the difference of the tracker x and the target x
+
+            y_distance = tracker.y - target.y;//the distance y is the difference of the tracker y and the target y
+
+            return (Math.Abs(x_distance), Math.Abs(y_distance));//we return the calculated distance
+        }
+
+        public override bool CheckRange((int, int) desired_range, Character tracker, Character target)
+        {
+
+            if (tracker.character_id == "hero")
+            {//checking of the tracker for range is the hero
+
+                bool in_range;//bool that will represent whether or not we are in range
+
+                (int, int) distance;//int to store the distance calculated in DistanceTo
+
+                distance = DistanceTo(tracker, target);//assigning distance to DistanceTo
+
+                //MessageBox.Show(string.Format("goblin distance = x : {0} , y : {1}", distance.Item1, distance.Item2));
+
+                if (desired_range.Item1 >= distance.Item1 && desired_range.Item2 >= distance.Item2)//if the desired range on x and y is less than are equal to the distance we return true if not then we are out of range and we return false
+                {
+                    in_range = true;//sets the range bool to true
+                }
+                else { in_range = false;/*sets the range bool to false*/ }
+
+                return in_range;//return the bool calculated for
+            }
+            return false;//if the tracker character id is not either options checked for we return false
+        }
+
+
+    }
+
+
+
+
+
+
+
+    public class Hero : Character//the HERO ᕦ(ò_óˇ)ᕤ object that handles player controll, it derives from character... cause we wanna move..........
     {
 
 
@@ -1737,6 +2090,7 @@ namespace _19338445_GADE_6112_Task_1
         public Hero (int hero_x, int hero_y, int hero_max_hp, int hero_damage)//constructor recieves and sets, yeah yeah... 
         {
 
+            
 
             x = hero_x;
             y = hero_y;
@@ -1747,6 +2101,8 @@ namespace _19338445_GADE_6112_Task_1
             character_id = "hero";
 
             this.Equip(new MeleeWeapon(0,0,Weapon.WeaponType.BareHands));
+
+            gold_amt = hero_gold.Sum();
 
         }
 
@@ -1768,6 +2124,8 @@ namespace _19338445_GADE_6112_Task_1
 
                         hero_gold.Add(gold.gold_accsesor);//we add the gold amount to the hero_gold list
                     }
+
+                    gold_amt = hero_gold.Sum();
 
                 }
 
@@ -1930,6 +2288,8 @@ namespace _19338445_GADE_6112_Task_1
 
         int num_mages = 0;
 
+        int num_leaders = 0;
+
         public Tile[,] generated_map;
 
         public Item[] items;
@@ -2081,7 +2441,7 @@ namespace _19338445_GADE_6112_Task_1
         {
             int enemy_id;
 
-            enemy_id = rand_num.Next(0, 2);
+            enemy_id = rand_num.Next(0, 3);
 
 
             return enemy_id;
@@ -2104,6 +2464,10 @@ namespace _19338445_GADE_6112_Task_1
                         break;
                     case 1://if the pick enemy random int id is one we add a mage to the enemies array
                         /*(Console.WriteLine("mage");*/ enemies[i] = new Mage(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);//if id is 1 then we add a mage to the enemies array
+                        break;
+                    case 2://if the pick enemy random int id is two we add a leader to the enemies array
+                        /*Console.WriteLine("goblin");*/
+                        enemies[i] = new Leader(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);//if id is 2 then we add a leader to the enemies array
                         break;
 
                 }
@@ -2168,6 +2532,11 @@ namespace _19338445_GADE_6112_Task_1
                             /*Console.WriteLine("mage");*/
                             tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Mage);//we give the tile added the mage tag
                             num_mages += 1;
+                            break;
+                        case "leader"://if the ememy id is goblin
+                            /*Console.WriteLine("goblin");*/
+                            tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Leader);//we give the tile added the goblin tag
+                            num_leaders += 1;
                             break;
 
                     }
@@ -2245,6 +2614,7 @@ namespace _19338445_GADE_6112_Task_1
 
             Mage[] mages = new Mage[10];//array of mages so we can access every instance of Mage on our map
             Goblin[] goblins = new Goblin[10];//array of goblins so we can access every instance of Goblin on our map
+            Leader[] leaders = new Leader[10];//array of lerders so we can access every instance of Leader on our map
 
             for (int i = 0; i <= enemy_amt - 1; i++)//loop through every enemy in the enemies array
             {
@@ -2267,6 +2637,10 @@ namespace _19338445_GADE_6112_Task_1
                             break;
                         case "mage"://if enemy is mage
                             mages[i] = (Mage)enemies[i];//we take the mages out of the enemies array and store them in the mages array to we can access them
+                            break;
+                        case "leader"://if enemy is a goblin
+                            leaders[i] = (Leader)enemies[i];//we take the lerders out of the enemies array and store them in the leaders array to we can access them
+                            leaders[i].LeaderMovement();//we cann leadermovement to update
                             break;
 
                     }
@@ -2306,6 +2680,7 @@ namespace _19338445_GADE_6112_Task_1
 
             Mage[] mages = new Mage[10];//array of mages so we can access every instance of Mage on our map
             Goblin[] goblins = new Goblin[10];//array of goblins so we can access every instance of Goblin on our map
+            Leader[] leaders = new Leader[10];//array of leaders so we can access every instance of Leader on our map
 
             for (int i = 0; i <= enemy_amt - 1; i++)//loop through every enemy in the enemies array
             {
@@ -2328,6 +2703,9 @@ namespace _19338445_GADE_6112_Task_1
                             break;
                         case "mage"://if enemy is mage
                             mages[i] = (Mage)enemies[i];//we take the mages out of the enemies array and store them in the mages array to we can access them
+                            break;
+                        case "leader"://if enemy is a goblin
+                            leaders[i] = (Leader)enemies[i];//we take the leaders out of the enemies array and store them in the leaders array to we can access them
                             break;
 
                     }
