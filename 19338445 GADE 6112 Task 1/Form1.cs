@@ -20,7 +20,7 @@ namespace _19338445_GADE_6112_Task_1
 
         public Hero hero_player = new Hero(1, 1, 10, 2);//instance of the Hero object
 
-        public Map game_map = new Map(/*num enemies ->*/2,/*num items ->*/ 4, 8, 18, 8, 18);//instance of the Map object
+        public Map game_map = new Map(/*num enemies ->*/2,/*num items ->*/ 6, 15, 18, 15, 18);//instance of the Map object
 
 
 
@@ -56,7 +56,12 @@ namespace _19338445_GADE_6112_Task_1
 
             enemy_list.Items.AddRange(game_map.enemies);//adds the enemies array in game map to the enemy list on the form
 
+            
+
         }
+
+
+       
 
 
         void SetUpGameComponents()
@@ -96,18 +101,45 @@ namespace _19338445_GADE_6112_Task_1
 
             hero_weapon_label.Text = string.Format("Weapon: {0}", hero_player.weapon.weapon_type);
 
+            if (hero_player.weapon.durability_p == 12345) { hero_weapon_durability.Text = "Durability: Infinity"; }
+            else
+            {
+
+                hero_weapon_durability.Text = string.Format("Durability: {0}", hero_player.weapon.durability_p);
+            }
+
+
+            hero_weapon_range.Text = string.Format("Range: {0}", hero_player.weapon.Range());
+
 
             enemy_index_selected = enemy_list.SelectedIndex;//assign the selected enemy index
 
             if (enemy_index_selected != -1) {// if we have selected an enemy
 
-                enemy_health_label.Text = string.Format("Health: {0}/{1}", game_map.enemies[enemy_index_selected].max_hp, game_map.enemies[enemy_index_selected].current_hp);// displa enemy health
 
-                enemy_damage_label.Text = string.Format("Damage: {0}", game_map.enemies[enemy_index_selected].damage);// display enemy damage
+                if (game_map.enemies[enemy_index_selected] != null)
+                {
 
-                enemy_type_label.Text = string.Format("Type: {0}", game_map.enemies[enemy_index_selected].enemy_id);// display enemy type
+                    enemy_health_label.Text = string.Format("Health: {0}/{1}", game_map.enemies[enemy_index_selected].max_hp, game_map.enemies[enemy_index_selected].current_hp);// displa enemy health
 
-                enemy_weapon_label.Text = string.Format("Weapon: {0}", game_map.enemies[enemy_index_selected].weapon.weapon_type);
+                    
+
+                    enemy_damage_label.Text = string.Format("Damage: {0}", game_map.enemies[enemy_index_selected].damage);// display enemy damage
+
+                    enemy_type_label.Text = string.Format("Type: {0}", game_map.enemies[enemy_index_selected].enemy_id);// display enemy type
+
+                    enemy_weapon_label.Text = string.Format("Weapon: {0}", game_map.enemies[enemy_index_selected].weapon.weapon_type);
+
+                    if (game_map.enemies[enemy_index_selected].weapon.durability_p == 12345) { enemy_weapon_durability.Text = "Durability: Infinity"; }
+                    else
+                    {
+
+                        enemy_weapon_durability.Text = string.Format("Durability: {0}", game_map.enemies[enemy_index_selected].weapon.durability_p);
+                    }
+
+                }
+
+
             }
 
             UpdateMap();//update the map
@@ -132,6 +164,8 @@ namespace _19338445_GADE_6112_Task_1
             game_tiles = game_map.GenMap();//assign the game_tiles 2 dimensional Tile array to the 2 dimensional Tile array GenMap in the Map class of instace game_map
 
             hero_player.Game_Tiles = game_tiles;
+
+            
 
 
 
@@ -276,6 +310,38 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Longbow)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "B";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Rifel)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "R";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
 
                     if (user_selected_item == true) {
 
@@ -292,6 +358,13 @@ namespace _19338445_GADE_6112_Task_1
                 }
 
             }
+
+
+
+
+
+
+
 
 
 
@@ -466,11 +539,48 @@ namespace _19338445_GADE_6112_Task_1
 
                     }
 
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Longbow)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "B";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Rifel)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "R";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+
                     if (user_selected_item == true)
                     {
 
                         if (la[li].Left == SelectedEnemyData(enemy_index_selected).Item1 && la[li].Top == SelectedEnemyData(enemy_index_selected).Item2)//of the lable is associated with the selected enemy if so highlight it for the user to see
                         {
+
+                           
+
                             la[li].ForeColor = Color.Black;//set the front colour(the colour of the text)
                             la[li].BackColor = Color.White;//set the background colour of the lable
                         }
@@ -520,6 +630,8 @@ namespace _19338445_GADE_6112_Task_1
 
             DisplayStats();
 
+            
+
         }
 
         private void enemy_list_SelectedIndexChanged(object sender, EventArgs e)
@@ -551,6 +663,7 @@ namespace _19338445_GADE_6112_Task_1
 
                             if (la[li].Left == SelectedEnemyData(enemy_index_selected).Item1 && la[li].Top == SelectedEnemyData(enemy_index_selected).Item2)//of the lable is associated with the selected enemy if so highlight it for the user to see
                             {
+                              
 
                                 la[li].ForeColor = Color.Black;//set the front colour(the colour of the text)
                                 la[li].BackColor = Color.White;//set the background colour of the lable
@@ -592,14 +705,20 @@ namespace _19338445_GADE_6112_Task_1
         public (int,int) SelectedEnemyData (int enemy_index)//get the index of the enemy selceted and return its x and y postion in realation to its posiion
         {
 
-          int enemy_x = game_map.enemies[enemy_index].x;
+            if (game_map.enemies[enemy_index] != null)
+            {
 
-          int enemy_y = game_map.enemies[enemy_index].y;
+                int enemy_x = game_map.enemies[enemy_index].x;
 
-            enemy_x *= 20;
-            enemy_y *= 20;
+                int enemy_y = game_map.enemies[enemy_index].y;
 
-           return (enemy_x, enemy_y);
+                enemy_x *= 20;
+                enemy_y *= 20;
+
+                return (enemy_x, enemy_y);
+            }
+
+            return (0,0);
            
         }
 
@@ -611,57 +730,88 @@ namespace _19338445_GADE_6112_Task_1
                 for (int i = 0; i <= game_map.enemies.Length -1;i++)//loop through the enemies array
                 {
 
-                    if (game_map.enemies[i].enemy_id == "goblin") {//if the current enemy is a goblin
 
-
-                        bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);//assign the chech range bool to a local variable
-
-                        if (goblin_attack == true)//if the giblin is on range
-                        {
-                            hero_player.current_hp -= game_map.enemies[i].damage;//he/she/they what ever it identifies as will subtracts its damage from the heros health
-
-                            MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));//display what just went down bruv
-
-                            DisplayStats();//call this thing cause update values of character things... yeah
-                        }
-                       
-
-                    }else if (game_map.enemies[i].enemy_id == "mage")
+                    if (game_map.enemies[i] != null)
                     {
-                        for (int j = 0; j <= game_map.enemies.Length - 1; j++)//do a seperate loop through the enemies array
-                        {
-                            bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);//check the range from the mage to what ever enemy is the current
 
-                            Console.WriteLine(string.Format ("enemy x {0} , y {1}" , game_map.enemies[j].x, game_map.enemies[j].y));
 
-                            Console.WriteLine(string.Format("my enemy x {0} , y {1}", game_map.enemies[i].x, game_map.enemies[i].y));
 
-                            if (mage_attack_enemy == true)//if the mage is in range
+                        if (game_map.enemies[i].enemy_id == "goblin")
+                        {//if the current enemy is a goblin
+
+
+                            bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);//assign the chech range bool to a local variable
+
+                            if (goblin_attack == true)//if the giblin is on range
                             {
-                                game_map.enemies[j].current_hp -= game_map.enemies[i].damage;//subtract the mage damage from the enemy current hp
 
-                                MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));//show that we hit
+                                game_map.enemies[i].Attack(game_map.enemies[i], hero_player);
 
-                                DisplayStats();//call display states cause gotta show that updates stats..............................
+                                //hero_player.current_hp -= game_map.enemies[i].damage;//he/she/they what ever it identifies as will subtracts its damage from the heros health
+
+                                MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));//display what just went down bruv
+
+                                DisplayStats();//call this thing cause update values of character things... yeah
                             }
+
+
                         }
-
-
-                        //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN---------------------------
-
-                        bool mage_attack_hero = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
-
-                        if (mage_attack_hero == true)
+                        else if (game_map.enemies[i].enemy_id == "mage")
                         {
-                            hero_player.current_hp -= game_map.enemies[i].damage;
+                            for (int j = 0; j <= game_map.enemies.Length - 1; j++)//do a seperate loop through the enemies array
+                            {
 
-                            MessageBox.Show(string.Format("mage attacked hero for {0} damage", game_map.enemies[i].damage));
+                                if (game_map.enemies[j] != null)
+                                {
 
-                            DisplayStats();
+                                    bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);//check the range from the mage to what ever enemy is the current
+
+                                    Console.WriteLine(string.Format("enemy x {0} , y {1}", game_map.enemies[j].x, game_map.enemies[j].y));
+
+                                    Console.WriteLine(string.Format("my enemy x {0} , y {1}", game_map.enemies[i].x, game_map.enemies[i].y));
+
+                                    if (mage_attack_enemy == true)//if the mage is in range
+                                    {
+
+                                        game_map.enemies[i].Attack(game_map.enemies[i], game_map.enemies[j]);
+
+                                        //game_map.enemies[j].current_hp -= game_map.enemies[i].damage;//subtract the mage damage from the enemy current hp
+
+                                        MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));//show that we hit
+
+                                        DisplayStats();//call display states cause gotta show that updates stats..............................
+                                    }
+
+
+                                }
+
+                            }
+
+
+                            //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN---------------------------
+
+                            bool mage_attack_hero = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
+
+                            if (mage_attack_hero == true)
+                            {
+
+                                game_map.enemies[i].Attack(game_map.enemies[i], hero_player);
+
+                                //hero_player.current_hp -= game_map.enemies[i].damage;
+
+                                MessageBox.Show(string.Format("mage attacked hero for {0} damage", game_map.enemies[i].damage));
+
+                                DisplayStats();
+                            }
+
+                            //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN--------------------------
                         }
 
-                        //-------------------------------------------------SAME SHIZ BUT FOR MAGE AS GOBLIN--------------------------
+
+
+
                     }
+
                 }
             }
             else if (hero_stationary == false)//if we aret moving and its after player attack
@@ -672,68 +822,112 @@ namespace _19338445_GADE_6112_Task_1
                 for (int i = 0; i <= game_map.enemies.Length - 1; i++)
                 {
 
-                    if (game_map.enemies[i].enemy_id == "goblin")
+                    if (game_map.enemies[i] != null)
                     {
 
 
-                        bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
 
-                        if (goblin_attack == true)
+
+
+                        if (game_map.enemies[i].enemy_id == "goblin")
                         {
-                            hero_player.current_hp -= game_map.enemies[i].damage;
-
-                            MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));
-
-                            DisplayStats();
-                        }
 
 
-                    }
-                    else if (game_map.enemies[i].enemy_id == "mage")
-                    {
-                        for (int j = 0; j <= game_map.enemies.Length - 1; j++)
-                        {
-                            bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);
+                            bool goblin_attack = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
 
-                            Console.WriteLine(string.Format("enemy x {0} , y {1}", game_map.enemies[j].x, game_map.enemies[j].y));
-
-                            Console.WriteLine(string.Format("my enemy x {0} , y {1}", game_map.enemies[i].x, game_map.enemies[i].y));
-
-                            if (mage_attack_enemy == true)
+                            if (goblin_attack == true)
                             {
-                                game_map.enemies[j].current_hp -= game_map.enemies[i].damage;
 
-                                MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));
+                                game_map.enemies[i].Attack(game_map.enemies[i], hero_player);
+
+                                //hero_player.current_hp -= game_map.enemies[i].damage;
+
+                                MessageBox.Show(string.Format("goblin attacked hero for {0} damage", game_map.enemies[i].damage));
 
                                 DisplayStats();
                             }
+
+
                         }
-
-
-                        bool mage_attack_hero = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
-
-                        if (mage_attack_hero == true)
+                        else if (game_map.enemies[i].enemy_id == "mage")
                         {
-                            hero_player.current_hp -= game_map.enemies[i].damage;
+                            for (int j = 0; j <= game_map.enemies.Length - 1; j++)
+                            {
 
-                            MessageBox.Show(string.Format("mage attacked hero for {0} damage", game_map.enemies[i].damage));
 
-                            DisplayStats();
+                                if (game_map.enemies[j] != null)
+                                {
+
+
+                                    bool mage_attack_enemy = game_map.enemies[i].CheckRange((1, 1), game_map.enemies[j], game_map.enemies[i]);
+
+                                    Console.WriteLine(string.Format("enemy x {0} , y {1}", game_map.enemies[j].x, game_map.enemies[j].y));
+
+                                    Console.WriteLine(string.Format("my enemy x {0} , y {1}", game_map.enemies[i].x, game_map.enemies[i].y));
+
+                                    if (mage_attack_enemy == true)
+                                    {
+                                        //game_map.enemies[j].current_hp -= game_map.enemies[i].damage;
+
+                                        game_map.enemies[i].Attack(game_map.enemies[i], game_map.enemies[j]);
+
+                                        MessageBox.Show(string.Format("mage attacked {0} for {1} damage", game_map.enemies[j].enemy_id, game_map.enemies[i].damage));
+
+                                        DisplayStats();
+                                    }
+
+
+                                }
+
+
+                            }
+
+
+                            bool mage_attack_hero = game_map.enemies[i].CheckRange((1, 1), hero_player, game_map.enemies[i]);
+
+                            if (mage_attack_hero == true)
+                            {
+
+                                game_map.enemies[i].Attack(game_map.enemies[i], hero_player);
+
+                                //hero_player.current_hp -= game_map.enemies[i].damage;
+
+                                MessageBox.Show(string.Format("mage attacked hero for {0} damage", game_map.enemies[i].damage));
+
+                                DisplayStats();
+                            }
+
+
+                            //-------------------------------------------------------SAME AS ABOVE BUT JUST FIRES AFTER WE ATTACK-------------------------------------------------------------
                         }
 
 
-                        //-------------------------------------------------------SAME AS ABOVE BUT JUST FIRES AFTER WE ATTACK-------------------------------------------------------------
+
+
+
                     }
+
+
+
                 }
             }
 
 
+            game_map.CheckEnemies();
+
+            UpdateMap();//update the map
+
+            DisplayStats();
 
 
         }
 
         private void attack_enemy_button_Click(object sender, EventArgs e)//method called when we press t he attack button
         {
+
+            //enemy_list.Items.RemoveAt(1);
+
+            //enemy_list.Items.RemoveAt(1);
 
             enemy_index_selected = enemy_list.SelectedIndex;//get the index of the selcted item and assign it to a local variable to be used
 
@@ -746,7 +940,10 @@ namespace _19338445_GADE_6112_Task_1
                 if (attack_check == true)//if we are in range
                 {
 
-                    game_map.enemies[enemy_index_selected].current_hp -= hero_player.damage;//subtract the selected enemy curremt health by hero damage
+                    hero_player.Attack(hero_player, game_map.enemies[enemy_index_selected]);
+
+
+                    //game_map.enemies[enemy_index_selected].current_hp -= hero_player.damage;//subtract the selected enemy curremt health by hero damage
 
                     
                     MessageBox.Show(string.Format ("Attack hit {0} for {1} damage!" , game_map.enemies[enemy_index_selected].enemy_id, hero_player.damage));//display that we hit
@@ -760,10 +957,28 @@ namespace _19338445_GADE_6112_Task_1
 
             EnemyAttack(false);//call enemy attack
 
+
+            game_map.CheckEnemies();
+
+            UpdateMap();//update the map
+
+            DisplayStats();
+
         }
 
 
-      
+
+
+        public void DeleteEnemy(int index_remove)
+        {
+
+           
+           
+
+
+        }
+
+
 
     }
 
@@ -771,7 +986,7 @@ namespace _19338445_GADE_6112_Task_1
 
     public class Tile/*the tile base class the defines what all tiles are at a base level, all classes exept from Map and game engine will inherit from this class*/ {
 
-        public enum TileType {Player, Air, Wall, Goblin, Mage, Gold, Dagger, Longsword};//an enum to store the tiles type, used for checking and assigning tiles in game engine
+        public enum TileType {Player, Air, Wall, Goblin, Mage, Gold, Dagger, Longsword, Longbow, Rifel};//an enum to store the tiles type, used for checking and assigning tiles in game engine
 
         public int x;//an int to store the x position of the tile
         public int y;//an int to store the y position of the tile
@@ -882,12 +1097,14 @@ namespace _19338445_GADE_6112_Task_1
 
         public string weapon_type;
 
-        public enum WeaponType {Longsword, Dagger, BareHands }
+        public int w_range;
+
+        public enum WeaponType {Longsword, Dagger, BareHands, Longbow, Rifel, MagicalHands }
 
         public virtual int Range ()
         {
 
-            return 0;
+            return w_range;
         }
 
 
@@ -900,9 +1117,9 @@ namespace _19338445_GADE_6112_Task_1
         }
 
 
-        public void Durability ()
+        public void Durability (string wp)
         {
-            durability_p -= 1;
+            if (wp != "BareHands") { durability_p -= 1; }
 
         }
 
@@ -912,7 +1129,9 @@ namespace _19338445_GADE_6112_Task_1
     public class MeleeWeapon : Weapon
     {
 
-       // public delegate MeleeWeapon callback(int c_x, int c_y, string c_symbol);
+        // public delegate MeleeWeapon callback(int c_x, int c_y, string c_symbol);
+
+        public enum Types {Dagger, Longsword }
 
        
         public MeleeWeapon (int x_pos, int y_pos, WeaponType wp) : base (x_pos,y_pos,wp)
@@ -936,9 +1155,9 @@ namespace _19338445_GADE_6112_Task_1
 
             if (wp == WeaponType.Longsword)
             {
-                 durability_p = 10;
-                weapon_damage_p = 3;
-                cost_p = 3;
+                 durability_p = 6;
+                weapon_damage_p = 4;
+                cost_p = 5;
                 weapon_type = "Longsword";
 
                 item_type = "Longsword";
@@ -947,14 +1166,23 @@ namespace _19338445_GADE_6112_Task_1
 
             if (wp == WeaponType.BareHands)
             {
-                durability_p = 10;
+                durability_p = 12345;
                 weapon_damage_p = 1;
                 cost_p = 0;
                 weapon_type = "BareHands";
 
             }
 
-           
+            if (wp == WeaponType.MagicalHands)
+            {
+                durability_p = 12345;
+                weapon_damage_p = 5;
+                cost_p = 0;
+                weapon_type = "Magical Hands";
+
+            }
+
+
 
         }
 
@@ -977,6 +1205,72 @@ namespace _19338445_GADE_6112_Task_1
     }
 
 
+    public class RangedWeapon : Weapon
+    {
+
+        // public delegate MeleeWeapon callback(int c_x, int c_y, string c_symbol);
+
+        public enum Types { Dagger, Longsword }
+
+
+        public RangedWeapon(int x_pos, int y_pos, WeaponType wp) : base(x_pos, y_pos, wp)
+        {
+            x = x_pos;
+
+            y = y_pos;
+
+
+            if (wp == WeaponType.Longbow)
+            {
+
+                durability_p = 4;
+                w_range = 2;
+                weapon_damage_p = 4;
+                cost_p = 6;
+                weapon_type = "Longbow";
+
+                item_type = "Longbow";
+            }
+
+
+            if (wp == WeaponType.Rifel)
+            {
+                durability_p = 3;
+                w_range = 3;
+                weapon_damage_p = 5;
+                cost_p = 7;
+                weapon_type = "Rifel";
+
+                item_type = "Rifel";
+
+            }
+
+
+        }
+
+
+
+
+
+        public override void ToString()
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public override int Range()
+        {
+
+            return base.Range();
+        }
+
+
+
+
+
+    }
+
+
     public abstract class Character : Tile//abstrcact class for all things that move and interact with other thigs that move
     {
 
@@ -990,6 +1284,8 @@ namespace _19338445_GADE_6112_Task_1
         public int current_hp;//int to store what our health points is currently at.
         public int damage;//int to store how much damage the charactar does
 
+        public int attack_range;
+
 
 
         public string character_id;
@@ -1002,12 +1298,24 @@ namespace _19338445_GADE_6112_Task_1
             weapon = w;
             
             damage = w.weapon_damage_p;
+
+            attack_range = w.Range();
+
+            
         }
 
         public virtual void Attack(Character attacker, Character victum)//method that calculates the attack action, (ó ì_í)=óò=(ì_í ò)
         {
-            attacker.damage -= victum.current_hp;//subtract the attacker characters damage from the victum characters current hp 
-            weapon.Durability();
+
+
+
+            weapon.Durability(this.weapon.weapon_type);
+
+            victum.current_hp  -= attacker.damage;//subtract the attacker characters damage from the victum characters current hp 
+
+
+            
+
 
         }
 
@@ -1015,7 +1323,7 @@ namespace _19338445_GADE_6112_Task_1
         {
             bool dead;
 
-            if (c.current_hp >= 0) { dead = true; } else { dead = false; }//if the charactars current hp is zero or lower we return true if the charactars current hp is higher that zero we return false
+            if (c.current_hp <= 0) { dead = true; } else { dead = false; }//if the charactars current hp is zero or lower we return true if the charactars current hp is higher that zero we return false
 
             return dead;
         }
@@ -1041,6 +1349,10 @@ namespace _19338445_GADE_6112_Task_1
             (int, int) distance;//int to store the distance calculated in DistanceTo
 
             distance = DistanceTo(tracker, target);//assigning distance to DistanceTo
+
+            desired_range.Item1 *= attack_range;
+
+            desired_range.Item2 *= attack_range;
 
             MessageBox.Show(string.Format("x : {0} , y : {1}", distance.Item1, distance.Item2));
 
@@ -1113,7 +1425,7 @@ namespace _19338445_GADE_6112_Task_1
             {
                 for (int y = 0; y <= y_size - 1; y++)
                 {
-                    if (map_tiles[x, y].tile_type == TileType.Air)//if we loop through air tiles and gold tiles
+                    if (map_tiles[x, y].tile_type == TileType.Air || map_tiles[x, y].tile_type == TileType.Goblin || map_tiles[x, y].tile_type == TileType.Mage)//if we loop through air tiles and gold tiles
                     {
 
                         charactar_vision[x, y] = map_tiles[x, y];//we assign them to the character vision array
@@ -1343,6 +1655,9 @@ namespace _19338445_GADE_6112_Task_1
             enemy_id = "mage";
 
             character_id = "enemy";
+
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.MagicalHands));
+
         }
 
         public override void ReturnMove(Movement move)//overwtitten return move
@@ -1369,23 +1684,33 @@ namespace _19338445_GADE_6112_Task_1
         public override bool CheckRange((int, int) desired_range, Character tracker, Character target)//Mages check range
         {
 
-            if (tracker.character_id == "enemy" || tracker.character_id == "hero") {//checking of the tracker for range is the hero or an enemy
+            if (tracker != null)
+            {
 
-                bool in_range;//bool that will represent whether or not we are in range
 
-                (int, int) distance;//int to store the distance calculated in DistanceTo
 
-                distance = DistanceTo(tracker, target);//assigning distance to DistanceTo
+                if (tracker.character_id == "enemy" || tracker.character_id == "hero")
+                {//checking of the tracker for range is the hero or an enemy
 
-                //MessageBox.Show(string.Format("mage distance = x : {0} , y : {1}", distance.Item1, distance.Item2));
+                    bool in_range;//bool that will represent whether or not we are in range
 
-                if (desired_range.Item1 >= distance.Item1 && desired_range.Item2 >= distance.Item2 && distance.Item1 != 0 && distance.Item2 != 0)//if the desired range on x and y is less than are equal to the distance we return true if not then we are out of range and we return false, and checking that the range is not zero otherwise we would attack ourself
-                {
-                    in_range = true;//sets the range bool to true
+                    (int, int) distance;//int to store the distance calculated in DistanceTo
+
+                    distance = DistanceTo(tracker, target);//assigning distance to DistanceTo
+
+                    //MessageBox.Show(string.Format("mage distance = x : {0} , y : {1}", distance.Item1, distance.Item2));
+
+                    if (desired_range.Item1 >= distance.Item1 && desired_range.Item2 >= distance.Item2 && distance.Item1 != 0 && distance.Item2 != 0)//if the desired range on x and y is less than are equal to the distance we return true if not then we are out of range and we return false, and checking that the range is not zero otherwise we would attack ourself
+                    {
+                        in_range = true;//sets the range bool to true
+                    }
+                    else { in_range = false;/*sets the range bool to false*/ }
+
+                    return in_range;//return the bool calculated for
+
                 }
-                else { in_range = false;/*sets the range bool to false*/ }
 
-                return in_range;//return the bool calculated for
+
 
             }
 
@@ -1458,7 +1783,19 @@ namespace _19338445_GADE_6112_Task_1
 
                 }
 
-                
+                if (item.item_type == "Longbow")
+                {
+                    this.Equip(new RangedWeapon(0, 0, Weapon.WeaponType.Longbow));
+
+                }
+
+                if (item.item_type == "Rifel")
+                {
+                    this.Equip(new RangedWeapon(0, 0, Weapon.WeaponType.Rifel));
+
+                }
+
+
             }
         
 
@@ -1507,7 +1844,7 @@ namespace _19338445_GADE_6112_Task_1
             {
                 for (int y = 0; y <= map.y_map_size - 1; y++)
                 {
-                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold || Game_Tiles[x, y].tile_type == TileType.Dagger || Game_Tiles[x, y].tile_type == TileType.Longsword)//if we loop through air tiles and gold tiles
+                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold || Game_Tiles[x, y].tile_type == TileType.Dagger || Game_Tiles[x, y].tile_type == TileType.Longsword || Game_Tiles[x, y].tile_type == TileType.Longbow || Game_Tiles[x, y].tile_type == TileType.Rifel)//if we loop through air tiles and gold tiles
                     {
                         charactar_vision[x, y] = Game_Tiles[x, y];//we assign them to the character vision array
 
@@ -1650,7 +1987,7 @@ namespace _19338445_GADE_6112_Task_1
         {
 
 
-            Console.WriteLine(x_map_size);
+            //Console.WriteLine(x_map_size);
 
             int x = rand_num.Next(2, x_map_size - 1);
 
@@ -1667,7 +2004,7 @@ namespace _19338445_GADE_6112_Task_1
         {
 
 
-            return rand_num.Next(0, 3); ;
+            return rand_num.Next(0, 5); ;
         }
 
 
@@ -1692,6 +2029,16 @@ namespace _19338445_GADE_6112_Task_1
 
                     case 2:
                         items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longsword);//add gold to the items array at a random position
+
+                        break;
+
+                    case 3:
+                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longbow);//add gold to the items array at a random position
+
+                        break;
+
+                    case 4:
+                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Rifel);//add gold to the items array at a random position
 
                         break;
 
@@ -1763,7 +2110,7 @@ namespace _19338445_GADE_6112_Task_1
 
                 
 
-                    Console.WriteLine(enemies.Length);
+                    //Console.WriteLine(enemies.Length);
 
             }
 
@@ -1803,20 +2150,33 @@ namespace _19338445_GADE_6112_Task_1
             for (int i = 0; i <= enemy_amt - 1; i++)//loop through enemy amount and create and assign enemies to the tile array
 
             {
-                
-                switch (enemies[i].enemy_id) //we check the string id of the enemy to know what tile type to assign to the tile
+
+
+                if (enemies[i] != null)
                 {
 
-                    case "goblin"://if the ememy id is goblin
-                        /*Console.WriteLine("goblin");*/ tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Goblin);//we give the tile added the goblin tag
-                        num_goblins += 1;
-                        break;
-                    case "mage"://if the ememy id is mage
-                        /*Console.WriteLine("mage");*/ tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Mage);//we give the tile added the mage tag
-                        num_mages += 1;
-                        break;
-                
+
+                    switch (enemies[i].enemy_id) //we check the string id of the enemy to know what tile type to assign to the tile
+                    {
+
+                        case "goblin"://if the ememy id is goblin
+                            /*Console.WriteLine("goblin");*/
+                            tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Goblin);//we give the tile added the goblin tag
+                            num_goblins += 1;
+                            break;
+                        case "mage"://if the ememy id is mage
+                            /*Console.WriteLine("mage");*/
+                            tile_array_size[enemies[i].x, enemies[i].y] = new Tile(enemies[i].x, enemies[i].y, Tile.TileType.Mage);//we give the tile added the mage tag
+                            num_mages += 1;
+                            break;
+
+                    }
+
+
                 }
+
+
+
              //Console.WriteLine(string.Format ("enemy added/updated @ x : {0} , y : {1}" , enemies[i].x, enemies[i].y));
             }
 
@@ -1835,14 +2195,29 @@ namespace _19338445_GADE_6112_Task_1
                     {
                         tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Dagger);//we add the gold to the map
 
-                        Console.WriteLine(string.Format("Dagger spawned at {0} , {1}" , items[i].x, items[i].y));
+                        //Console.WriteLine(string.Format("Dagger spawned at {0} , {1}" , items[i].x, items[i].y));
                     }
 
                     if (items[i].item_type == "Longsword")
                     {
                         tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longsword);//we add the gold to the map
 
-                        Console.WriteLine("Longsword Spawned");
+                        //Console.WriteLine("Longsword Spawned");
+                    }
+
+                    if (items[i].item_type == "Longbow")
+                    {
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longbow);//we add the gold to the map
+
+                        //Console.WriteLine("Longbow Spawned");
+                    }
+
+
+                    if (items[i].item_type == "Rifel")
+                    {
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Rifel);//we add the gold to the map
+
+                        //Console.WriteLine("Rifel Spawned");
                     }
 
 
@@ -1874,33 +2249,117 @@ namespace _19338445_GADE_6112_Task_1
             for (int i = 0; i <= enemy_amt - 1; i++)//loop through every enemy in the enemies array
             {
 
-                enemies[i].map_tiles = generated_map;//assign the tile array gen map to the map_tiles for every enemy instance
-                enemies[i].x_size = x_map_size;
-                enemies[i].y_size = y_map_size;
-
-                switch (enemies[i].enemy_id)//check the id of the enemy
+                if (enemies[i] != null)
                 {
 
-                    case "goblin"://if enemy is a goblin
-                        goblins[i] = (Goblin)enemies[i];//we take the goblins out of the enemies array and store them in the goblins array to we can access them
-                        goblins[i].RollDirection();//we cann rolldirectio to update
-                        break;
-                    case "mage"://if enemy is mage
-                        mages[i] = (Mage)enemies[i];//we take the mages out of the enemies array and store them in the mages array to we can access them
-                        break;
+                    enemies[i].map_tiles = generated_map;//assign the tile array gen map to the map_tiles for every enemy instance
+                    enemies[i].x_size = x_map_size;
+                    enemies[i].y_size = y_map_size;
 
-                }               
+
+
+                    switch (enemies[i].enemy_id)//check the id of the enemy
+                    {
+
+                        case "goblin"://if enemy is a goblin
+                            goblins[i] = (Goblin)enemies[i];//we take the goblins out of the enemies array and store them in the goblins array to we can access them
+                            goblins[i].RollDirection();//we cann rolldirection to update
+                            break;
+                        case "mage"://if enemy is mage
+                            mages[i] = (Mage)enemies[i];//we take the mages out of the enemies array and store them in the mages array to we can access them
+                            break;
+
+                    }
+
+
+                    if (enemies[i].IsDead(enemies[i]) == true)
+                    {
+
+                        Console.WriteLine(string.Format("enemy {0} is sentenced for termination by the program.", enemies[i]));
+
+
+
+                        enemies[i] = null;
+
+                        Form1 f1 = new Form1();
+
+                        f1.DeleteEnemy(i);
+
+
+
+
+                    }
+
+                }
+                
             }
         }
 
-    
+
+
+        public void CheckEnemies()//method that updates the enemies 
+        {
+
+
+
+            //Console.WriteLine("update enemies called");
+
+            Mage[] mages = new Mage[10];//array of mages so we can access every instance of Mage on our map
+            Goblin[] goblins = new Goblin[10];//array of goblins so we can access every instance of Goblin on our map
+
+            for (int i = 0; i <= enemy_amt - 1; i++)//loop through every enemy in the enemies array
+            {
+
+                if (enemies[i] != null)
+                {
+
+                    enemies[i].map_tiles = generated_map;//assign the tile array gen map to the map_tiles for every enemy instance
+                    enemies[i].x_size = x_map_size;
+                    enemies[i].y_size = y_map_size;
+
+
+
+                    switch (enemies[i].enemy_id)//check the id of the enemy
+                    {
+
+                        case "goblin"://if enemy is a goblin
+                            goblins[i] = (Goblin)enemies[i];//we take the goblins out of the enemies array and store them in the goblins array to we can access them
+                           
+                            break;
+                        case "mage"://if enemy is mage
+                            mages[i] = (Mage)enemies[i];//we take the mages out of the enemies array and store them in the mages array to we can access them
+                            break;
+
+                    }
+
+
+                    if (enemies[i].IsDead(enemies[i]) == true)
+                    {
+
+                        Console.WriteLine(string.Format("enemy {0} is sentenced for termination by the program.", enemies[i]));
+
+
+
+                        enemies[i] = null;
+
+                        Form1 f1 = new Form1();
+
+                        f1.DeleteEnemy(i);
 
 
 
 
+                    }
 
+                }
 
-
+            }
         }
+
+
+
+
+
+    }
 
 }//19338445 Ethan Daniel Hunt, my fingers dont hurt as much (¬‿¬)
