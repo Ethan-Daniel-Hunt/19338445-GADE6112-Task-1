@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace _19338445_GADE_6112_Task_1
 {
@@ -93,6 +94,8 @@ namespace _19338445_GADE_6112_Task_1
 
             hero_position_label.Text = string.Format("Location: {0}:{1}", hero_player.x, hero_player.y);
 
+            hero_weapon_label.Text = string.Format("Weapon: {0}", hero_player.weapon.weapon_type);
+
 
             enemy_index_selected = enemy_list.SelectedIndex;//assign the selected enemy index
 
@@ -103,6 +106,8 @@ namespace _19338445_GADE_6112_Task_1
                 enemy_damage_label.Text = string.Format("Damage: {0}", game_map.enemies[enemy_index_selected].damage);// display enemy damage
 
                 enemy_type_label.Text = string.Format("Type: {0}", game_map.enemies[enemy_index_selected].enemy_id);// display enemy type
+
+                enemy_weapon_label.Text = string.Format("Weapon: {0}", game_map.enemies[enemy_index_selected].weapon.weapon_type);
             }
 
             UpdateMap();//update the map
@@ -237,6 +242,38 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
                         la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
                         la[li].Text = "O";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Dagger)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "D";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Longsword)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
 
@@ -394,6 +431,38 @@ namespace _19338445_GADE_6112_Task_1
                         la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
                         la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
                         la[li].Text = "O";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Dagger)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "D";//set the text of the lable. used as a visual representation for what type of tile it is
+
+                    }
+                    else if (game_tiles[x, y].tile_type == Tile.TileType.Longsword)//checking if game_tiles at the current index is of tile type player
+                    {
+
+                        this.Controls.Add(la[li]);//adding the lable from the lable array (at index li) to the form
+
+                        la[li].Left = 20 * x;//set the lable x position
+                        la[li].Top = 20 * y;//set the lable y position
+
+                        la[li].ForeColor = Color.Pink;//set the front colour(the colour of the text)
+                        la[li].BackColor = Color.Black;//set the background colour of the lable
+
+                        la[li].Font = new Font("Arial", 15f);//set the font and font size of the lable
+                        la[li].AutoSize = true;//set whether or not the label should auto size to the display. In this case true
+                        la[li].Text = "L";//set the text of the lable. used as a visual representation for what type of tile it is
 
                     }
 
@@ -702,7 +771,7 @@ namespace _19338445_GADE_6112_Task_1
 
     public class Tile/*the tile base class the defines what all tiles are at a base level, all classes exept from Map and game engine will inherit from this class*/ {
 
-        public enum TileType {Player, Air, Wall, Goblin, Mage, Gold};//an enum to store the tiles type, used for checking and assigning tiles in game engine
+        public enum TileType {Player, Air, Wall, Goblin, Mage, Gold, Dagger, Longsword};//an enum to store the tiles type, used for checking and assigning tiles in game engine
 
         public int x;//an int to store the x position of the tile
         public int y;//an int to store the y position of the tile
@@ -778,6 +847,8 @@ namespace _19338445_GADE_6112_Task_1
 
         public int gold_accsesor;
 
+       
+
         public Gold (int g_x,int g_y):base (g_x,g_y)
         {
 
@@ -797,6 +868,115 @@ namespace _19338445_GADE_6112_Task_1
         }
     }
 
+    public abstract class Weapon : Item
+    {
+
+       
+
+
+        public int weapon_damage_p;
+
+        public int durability_p;
+
+        public int cost_p;
+
+        public string weapon_type;
+
+        public enum WeaponType {Longsword, Dagger, BareHands }
+
+        public virtual int Range ()
+        {
+
+            return 0;
+        }
+
+
+        public Weapon (int x, int y, WeaponType wp)
+        {
+
+
+
+
+        }
+
+
+        public void Durability ()
+        {
+            durability_p -= 1;
+
+        }
+
+    }
+
+
+    public class MeleeWeapon : Weapon
+    {
+
+       // public delegate MeleeWeapon callback(int c_x, int c_y, string c_symbol);
+
+       
+        public MeleeWeapon (int x_pos, int y_pos, WeaponType wp) : base (x_pos,y_pos,wp)
+        {
+            x = x_pos;
+
+            y = y_pos;
+
+
+            if (wp == WeaponType.Dagger)
+            {
+
+                durability_p = 10;
+                weapon_damage_p = 3;
+                cost_p = 3;
+                weapon_type = "Dagger";
+
+                item_type = "Dagger";
+            }
+
+
+            if (wp == WeaponType.Longsword)
+            {
+                 durability_p = 10;
+                weapon_damage_p = 3;
+                cost_p = 3;
+                weapon_type = "Longsword";
+
+                item_type = "Longsword";
+
+            }
+
+            if (wp == WeaponType.BareHands)
+            {
+                durability_p = 10;
+                weapon_damage_p = 1;
+                cost_p = 0;
+                weapon_type = "BareHands";
+
+            }
+
+           
+
+        }
+
+       
+
+       
+
+        public override void ToString()
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public override int Range()
+        {
+            return 1;
+        }
+
+       
+    }
+
+
     public abstract class Character : Tile//abstrcact class for all things that move and interact with other thigs that move
     {
 
@@ -814,11 +994,21 @@ namespace _19338445_GADE_6112_Task_1
 
         public string character_id;
 
+        public Weapon weapon;
 
+
+        public void Equip (Weapon w)
+        {
+            weapon = w;
+            
+            damage = w.weapon_damage_p;
+        }
 
         public virtual void Attack(Character attacker, Character victum)//method that calculates the attack action, (ó ì_í)=óò=(ì_í ò)
         {
             attacker.damage -= victum.current_hp;//subtract the attacker characters damage from the victum characters current hp 
+            weapon.Durability();
+
         }
 
         public bool IsDead (Character c)//a bool method to check of the charactar has died
@@ -917,6 +1107,8 @@ namespace _19338445_GADE_6112_Task_1
 
             charactar_vision = new Tile[x_size, y_size];//set the size of the array
 
+            
+
             for (int x = 0; x <= x_size - 1; x++)
             {
                 for (int y = 0; y <= y_size - 1; y++)
@@ -993,6 +1185,8 @@ namespace _19338445_GADE_6112_Task_1
             enemy_id = "goblin";
 
             character_id = "enemy";
+
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));
         }
 
         public void DoGoblin()
@@ -1227,6 +1421,8 @@ namespace _19338445_GADE_6112_Task_1
 
             character_id = "hero";
 
+            this.Equip(new MeleeWeapon(0,0,Weapon.WeaponType.BareHands));
+
         }
 
 
@@ -1249,6 +1445,20 @@ namespace _19338445_GADE_6112_Task_1
                     }
 
                 }
+
+                if (item.item_type == "Dagger")
+                {
+                    this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));
+
+                }
+
+                if (item.item_type == "Longsword")
+                {
+                    this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));
+
+                }
+
+                
             }
         
 
@@ -1297,7 +1507,7 @@ namespace _19338445_GADE_6112_Task_1
             {
                 for (int y = 0; y <= map.y_map_size - 1; y++)
                 {
-                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold)//if we loop through air tiles and gold tiles
+                    if (Game_Tiles[x, y].tile_type == TileType.Air || Game_Tiles[x, y].tile_type == TileType.Gold || Game_Tiles[x, y].tile_type == TileType.Dagger || Game_Tiles[x, y].tile_type == TileType.Longsword)//if we loop through air tiles and gold tiles
                     {
                         charactar_vision[x, y] = Game_Tiles[x, y];//we assign them to the character vision array
 
@@ -1453,7 +1663,12 @@ namespace _19338445_GADE_6112_Task_1
         }
 
        
+        int RandomItemPicker ()
+        {
 
+
+            return rand_num.Next(0, 3); ;
+        }
 
 
         Item[] Items ()//items method that adds items to the map
@@ -1463,8 +1678,28 @@ namespace _19338445_GADE_6112_Task_1
             for (int i = 0; i <= item_amt - 1; i++)//loop through every item
             {
                
+                switch(RandomItemPicker())
+                {
+                    case 0:
+                        items[i] = new Gold(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);//add gold to the items array at a random position
 
-                    items[i] = new Gold(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2);//add gold to the items array at a random position
+                        break;
+
+                    case 1:
+                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Dagger);//add gold to the items array at a random position
+
+                        break;
+
+                    case 2:
+                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longsword);//add gold to the items array at a random position
+
+                        break;
+
+
+                }
+
+                    
+
                 
             }
                 return items;//return the items array
@@ -1588,10 +1823,31 @@ namespace _19338445_GADE_6112_Task_1
             for (int i = 0; i <= item_amt - 1; i++)//loop through items array
             {
 
-                if (items[i] != null && items[i].item_type == "gold")//if the current item is not null and its a gold item
+                if (items[i] != null)//if the current item is not null and its a gold item
                 {
-                    tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Gold);//we add the gold to the map
-                }else if (items[i] != null)//else
+
+                    if (items[i].item_type == "gold")
+                    {
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Gold);//we add the gold to the map
+                    }
+
+                    if (items[i].item_type == "Dagger")
+                    {
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Dagger);//we add the gold to the map
+
+                        Console.WriteLine(string.Format("Dagger spawned at {0} , {1}" , items[i].x, items[i].y));
+                    }
+
+                    if (items[i].item_type == "Longsword")
+                    {
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longsword);//we add the gold to the map
+
+                        Console.WriteLine("Longsword Spawned");
+                    }
+
+
+                }
+                else if (items[i] != null)//else
                 {
                     tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Air);//we add an air tile instead
                 }
