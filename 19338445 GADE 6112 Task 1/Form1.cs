@@ -97,7 +97,7 @@ namespace _19338445_GADE_6112_Task_1
 
             total_hero_gold = hero_player.hero_gold.Sum();//assign the sum of all gold in the hero gold list
 
-            hero_gold_label.Text = string.Format("Gold: {0}", total_hero_gold);// display gold
+            hero_gold_label.Text = string.Format("Gold: {0}", hero_player.gold_amt);// display gold
 
             hero_damage_label.Text = string.Format("Damage: {0}", hero_player.damage);// display hero damage
 
@@ -976,6 +976,18 @@ namespace _19338445_GADE_6112_Task_1
 
                     hero_player.Attack(hero_player, game_map.enemies[enemy_index_selected]);
 
+                    if (game_map.enemies[enemy_index_selected].IsDead(game_map.enemies[enemy_index_selected]) == true)
+                    {
+                        hero_player.gold_amt += game_map.enemies[enemy_index_selected].gold_amt;
+
+                        if (hero_player.weapon.weapon_type == "BareHands")
+                        {
+                            hero_player.Equip(game_map.enemies[enemy_index_selected].weapon);
+
+                        }
+
+                    }
+
 
                     //game_map.enemies[enemy_index_selected].current_hp -= hero_player.damage;//subtract the selected enemy curremt health by hero damage
 
@@ -1686,6 +1698,9 @@ namespace _19338445_GADE_6112_Task_1
             character_id = "enemy";
 
             this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));
+
+
+            gold_amt = 1;
         }
 
         public void DoGoblin()
@@ -1845,6 +1860,8 @@ namespace _19338445_GADE_6112_Task_1
 
             this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.MagicalHands));
 
+            gold_amt = 3;
+
         }
 
         public override void ReturnMove(Movement move)//overwtitten return move
@@ -1931,6 +1948,9 @@ namespace _19338445_GADE_6112_Task_1
             character_id = "enemy";
 
             this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));
+
+            gold_amt = 2;
+
         }
 
         
@@ -1948,8 +1968,17 @@ namespace _19338445_GADE_6112_Task_1
 
             int future_x = x;
 
-            int direction_id = random_enemys_amt.Next(0, 4);//gen a random direction
+            int direction_id = 0;
 
+           
+                
+
+
+
+            
+             direction_id = random_enemys_amt.Next(0, 4);//gen a random direction
+
+            
 
 
 
@@ -1973,12 +2002,13 @@ namespace _19338445_GADE_6112_Task_1
             }
 
 
-            return (future_x, future_y);//return da calculated values(づ｡◕‿‿◕｡)づ, we gonna use'em later.
 
+            return (future_x, future_y);//return da calculated values(づ｡◕‿‿◕｡)づ, we gonna use'em later.
 
 
         }
 
+       
 
         public override void ReturnMove(Movement move)//method that checks collision for enemy based on the predicted movement
         {
@@ -2019,11 +2049,11 @@ namespace _19338445_GADE_6112_Task_1
             }
             else if (charactar_vision[future_x, future_y] == null)//if the value we want to move to IS null
             {
-                LeaderMovement();//then we call for roll direction to find a new position to move to
+                LeaderMovement();
 
             }
 
-
+            
 
         }
 
