@@ -974,15 +974,15 @@ namespace _19338445_GADE_6112_Task_1
                 if (attack_check == true)//if we are in range
                 {
 
-                    hero_player.Attack(hero_player, game_map.enemies[enemy_index_selected]);
+                    hero_player.Attack(hero_player, game_map.enemies[enemy_index_selected]);//attack the enemy selected
 
-                    if (game_map.enemies[enemy_index_selected].IsDead(game_map.enemies[enemy_index_selected]) == true)
+                    if (game_map.enemies[enemy_index_selected].IsDead(game_map.enemies[enemy_index_selected]) == true)//if the enemy is dead
                     {
-                        hero_player.gold_amt += game_map.enemies[enemy_index_selected].gold_amt;
+                        hero_player.gold_amt += game_map.enemies[enemy_index_selected].gold_amt;//take his gold and add it to ours
 
-                        if (hero_player.weapon.weapon_type == "BareHands")
+                        if (hero_player.weapon.weapon_type == "BareHands")//if we have nothing equiped
                         {
-                            hero_player.Equip(game_map.enemies[enemy_index_selected].weapon);
+                            hero_player.Equip(game_map.enemies[enemy_index_selected].weapon);//equip the weapon of the enemy we just killed
 
                         }
 
@@ -1015,38 +1015,30 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-        public void DeleteEnemy(int index_remove)
-        {
 
-           
-           
-
-
-        }
-
-        private void shop_items_list_SelectedIndexChanged(object sender, EventArgs e)
+        private void shop_items_list_SelectedIndexChanged(object sender, EventArgs e)//if the shop selected index changes we update
         {
 
            
 
-            if (shop_items_list.SelectedIndex > -1)
+            if (shop_items_list.SelectedIndex > -1)//if we have selected something
             {
 
-                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);
+                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);//display item stats of what we have selected
 
             }
         }
 
-        private void buy_item_button_Click(object sender, EventArgs e)
+        private void buy_item_button_Click(object sender, EventArgs e)//if we click the buy item exicute the following code
         {
 
-            if (shop.CanBuy(shop_items_list.SelectedIndex) == true)
+            if (shop.CanBuy(shop_items_list.SelectedIndex) == true)//if we can buy this item
             {
-                shop.Buy(shop_items_list.SelectedIndex);
+                shop.Buy(shop_items_list.SelectedIndex);//we call the buy item method
 
-                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);
+                display_weapon_message.Text = shop.DisplayString(shop_items_list.SelectedIndex);//we update the display string
 
-                DisplayStats();
+                DisplayStats();//we update display stats
 
             }
 
@@ -1057,57 +1049,57 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-    public class Shop
+    public class Shop// the shop class
     {
 
-        public Weapon[] shop_weapons = new Weapon[3];
+        public Weapon[] shop_weapons = new Weapon[3];//array of shop weapons
 
         public Random random_obj;
 
-        public Character buyer;
+        public Character buyer;//character to represent the person buying from the shop
 
 
-        public Shop(Character the_buyer)
+        public Shop(Character the_buyer)//constructor
         {
 
-            buyer = the_buyer;
+            buyer = the_buyer;//set the buyer to the buyer inputed into constructor
 
-            random_obj = new Random();
+            random_obj = new Random();//initialise the random object
 
-            for (int i = 0; i <= shop_weapons.Length - 1; i++)
+            for (int i = 0; i <= shop_weapons.Length - 1; i++)//loop through the weapons in the shop
             {
-                shop_weapons[i] = RandomWeapon();
+                shop_weapons[i] = RandomWeapon();//assign each slot a random weapon
 
                 Console.WriteLine(shop_weapons[i].weapon_type);
 
             }
         }
 
-        private Weapon RandomWeapon()
+        private Weapon RandomWeapon()//random weapon method
         {
 
            
 
-            int w_id = random_obj.Next(0, 4);
+            int w_id = random_obj.Next(0, 4);//generate random number
 
             
 
             switch (w_id)
             {
                 case 0:
-                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger);
+                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger);//if random number is one we assign dagger
                     break;
 
                 case 1:
-                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword);
+                    return new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword);//if random number is two we assign longsword
                     break;
 
                 case 2:
-                    return new RangedWeapon(0, 0, Weapon.WeaponType.Longbow);
+                    return new RangedWeapon(0, 0, Weapon.WeaponType.Longbow);//if random number is tree we assign longbow
                     break;
 
                 case 3:
-                    return new RangedWeapon(0, 0, Weapon.WeaponType.Rifel);
+                    return new RangedWeapon(0, 0, Weapon.WeaponType.Rifel);//if random number is four we assign Rifel
                     break;
 
             }
@@ -1117,16 +1109,16 @@ namespace _19338445_GADE_6112_Task_1
         }
 
 
-        public bool CanBuy(int weapon_index)
+        public bool CanBuy(int weapon_index)//the can buy method to see of we are able to purchuse selected weapon
         {
 
-            if (weapon_index != -1)
+            if (weapon_index != -1)//if a weapon is selected
             {
 
               
 
 
-                if (shop_weapons[weapon_index].cost_p <= buyer.gold_amt)
+                if (shop_weapons[weapon_index].cost_p <= buyer.gold_amt)//of the cost of selected weapon is less that or equal to out current gold we can buy the weapon
                 {
 
 
@@ -1153,13 +1145,13 @@ namespace _19338445_GADE_6112_Task_1
         }
 
 
-        public void Buy (int weapon_index)
+        public void Buy (int weapon_index)//the buy method
         {
-            buyer.gold_amt -= shop_weapons[weapon_index].cost_p;
+            buyer.gold_amt -= shop_weapons[weapon_index].cost_p;//subtracy buyer gold from gold cost of weapon
 
-            buyer.Equip(shop_weapons[weapon_index]);
+            buyer.Equip(shop_weapons[weapon_index]);// equip the weapon bought
 
-            shop_weapons[weapon_index] = RandomWeapon();
+            shop_weapons[weapon_index] = RandomWeapon();//assign a new random weapon on the slot we just bought tthe weapon
 
             MessageBox.Show("Bought weapon.");
 
@@ -1280,7 +1272,7 @@ namespace _19338445_GADE_6112_Task_1
         }
     }
 
-    public abstract class Weapon : Item
+    public abstract class Weapon : Item// the weapon class
     {
 
        
@@ -1296,9 +1288,9 @@ namespace _19338445_GADE_6112_Task_1
 
         public int w_range;
 
-        public enum WeaponType {Longsword, Dagger, BareHands, Longbow, Rifel, MagicalHands }
+        public enum WeaponType {Longsword, Dagger, BareHands, Longbow, Rifel, MagicalHands }// weapon enums
 
-        public virtual int Range ()
+        public virtual int Range ()//weapon range value
         {
 
             return w_range;
@@ -1314,7 +1306,7 @@ namespace _19338445_GADE_6112_Task_1
         }
 
 
-        public void Durability (string wp)
+        public void Durability (string wp)//calculate durability of the current weapon
         {
             if (wp != "BareHands") { durability_p -= 1; }
 
@@ -1323,7 +1315,7 @@ namespace _19338445_GADE_6112_Task_1
     }
 
 
-    public class MeleeWeapon : Weapon
+    public class MeleeWeapon : Weapon// melee weapons
     {
 
         // public delegate MeleeWeapon callback(int c_x, int c_y, string c_symbol);
@@ -1331,7 +1323,7 @@ namespace _19338445_GADE_6112_Task_1
         public enum Types {Dagger, Longsword }
 
        
-        public MeleeWeapon (int x_pos, int y_pos, WeaponType wp) : base (x_pos,y_pos,wp)
+        public MeleeWeapon (int x_pos, int y_pos, WeaponType wp) : base (x_pos,y_pos,wp)// switched weapon stats based on weapon enum provided in the custructor
         {
             x = x_pos;
 
@@ -1393,7 +1385,7 @@ namespace _19338445_GADE_6112_Task_1
             throw new NotImplementedException();
         }
 
-        public override int Range()
+        public override int Range()//sets range to one
         {
             return 1;
         }
@@ -1410,7 +1402,7 @@ namespace _19338445_GADE_6112_Task_1
         public enum Types { Dagger, Longsword }
 
 
-        public RangedWeapon(int x_pos, int y_pos, WeaponType wp) : base(x_pos, y_pos, wp)
+        public RangedWeapon(int x_pos, int y_pos, WeaponType wp) : base(x_pos, y_pos, wp)// switched weapon stats based on weapon enum provided in the custructor
         {
             x = x_pos;
 
@@ -1455,7 +1447,7 @@ namespace _19338445_GADE_6112_Task_1
             throw new NotImplementedException();
         }
 
-        public override int Range()
+        public override int Range()//sets range to value defind by weapon type range value
         {
 
             return base.Range();
@@ -1492,7 +1484,7 @@ namespace _19338445_GADE_6112_Task_1
         public int gold_amt;
 
 
-        public void Equip (Weapon w)
+        public void Equip (Weapon w)//change current stats to the weapon stats that is equiped, range and damage and sets out current weapon to weapon equiped
         {
             weapon = w;
             
@@ -1508,7 +1500,7 @@ namespace _19338445_GADE_6112_Task_1
 
 
 
-            weapon.Durability(this.weapon.weapon_type);
+            weapon.Durability(this.weapon.weapon_type);//updates weapon durability
 
             victum.current_hp  -= attacker.damage;//subtract the attacker characters damage from the victum characters current hp 
 
@@ -1697,10 +1689,10 @@ namespace _19338445_GADE_6112_Task_1
 
             character_id = "enemy";
 
-            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));//equip goblin with dagger
 
 
-            gold_amt = 1;
+            gold_amt = 1;// set goblin gold
         }
 
         public void DoGoblin()
@@ -1858,9 +1850,9 @@ namespace _19338445_GADE_6112_Task_1
 
             character_id = "enemy";
 
-            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.MagicalHands));
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.MagicalHands));// equip mage with magic hands
 
-            gold_amt = 3;
+            gold_amt = 3;// set mage gold
 
         }
 
@@ -1947,9 +1939,9 @@ namespace _19338445_GADE_6112_Task_1
 
             character_id = "enemy";
 
-            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));
+            this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));// equip leader with long sword
 
-            gold_amt = 2;
+            gold_amt = 2;//set leader gold
 
         }
 
@@ -2159,25 +2151,25 @@ namespace _19338445_GADE_6112_Task_1
 
                 }
 
-                if (item.item_type == "Dagger")
+                if (item.item_type == "Dagger")//checks is item is dagger
                 {
                     this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Dagger));
 
                 }
 
-                if (item.item_type == "Longsword")
+                if (item.item_type == "Longsword")//checks is item is longsword
                 {
                     this.Equip(new MeleeWeapon(0, 0, Weapon.WeaponType.Longsword));
 
                 }
 
-                if (item.item_type == "Longbow")
+                if (item.item_type == "Longbow")//checks is item is longbow
                 {
                     this.Equip(new RangedWeapon(0, 0, Weapon.WeaponType.Longbow));
 
                 }
 
-                if (item.item_type == "Rifel")
+                if (item.item_type == "Rifel")//checks is item is rifel
                 {
                     this.Equip(new RangedWeapon(0, 0, Weapon.WeaponType.Rifel));
 
@@ -2413,22 +2405,22 @@ namespace _19338445_GADE_6112_Task_1
                         break;
 
                     case 1:
-                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Dagger);//add gold to the items array at a random position
+                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Dagger);//add dagger to the items array at a random position
 
                         break;
 
                     case 2:
-                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longsword);//add gold to the items array at a random position
+                        items[i] = new MeleeWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longsword);//add longsword to the items array at a random position
 
                         break;
 
                     case 3:
-                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longbow);//add gold to the items array at a random position
+                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Longbow);//add longbow to the items array at a random position
 
                         break;
 
                     case 4:
-                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Rifel);//add gold to the items array at a random position
+                        items[i] = new RangedWeapon(RandomEnemySpawn().Item1, RandomEnemySpawn().Item2, Weapon.WeaponType.Rifel);//add rifel to the items array at a random position
 
                         break;
 
@@ -2592,21 +2584,21 @@ namespace _19338445_GADE_6112_Task_1
 
                     if (items[i].item_type == "Dagger")
                     {
-                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Dagger);//we add the gold to the map
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Dagger);//we add the dagger to the map
 
                         //Console.WriteLine(string.Format("Dagger spawned at {0} , {1}" , items[i].x, items[i].y));
                     }
 
                     if (items[i].item_type == "Longsword")
                     {
-                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longsword);//we add the gold to the map
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longsword);//we add the longsword to the map
 
                         //Console.WriteLine("Longsword Spawned");
                     }
 
                     if (items[i].item_type == "Longbow")
                     {
-                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longbow);//we add the gold to the map
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Longbow);//we add the longbow to the map
 
                         //Console.WriteLine("Longbow Spawned");
                     }
@@ -2614,7 +2606,7 @@ namespace _19338445_GADE_6112_Task_1
 
                     if (items[i].item_type == "Rifel")
                     {
-                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Rifel);//we add the gold to the map
+                        tile_array_size[items[i].x, items[i].y] = new Tile(items[i].x, items[i].y, Tile.TileType.Rifel);//we add the rifel to the map
 
                         //Console.WriteLine("Rifel Spawned");
                     }
@@ -2676,7 +2668,7 @@ namespace _19338445_GADE_6112_Task_1
                     }
 
 
-                    if (enemies[i].IsDead(enemies[i]) == true)
+                    if (enemies[i].IsDead(enemies[i]) == true)//if the enemy is dead we set them to null in the enemies array
                     {
 
                         Console.WriteLine(string.Format("enemy {0} is sentenced for termination by the program.", enemies[i]));
@@ -2685,13 +2677,7 @@ namespace _19338445_GADE_6112_Task_1
 
                         enemies[i] = null;
 
-                        Form1 f1 = new Form1();
-
-                        f1.DeleteEnemy(i);
-
-
-
-
+                      
                     }
 
                 }
@@ -2741,7 +2727,7 @@ namespace _19338445_GADE_6112_Task_1
                     }
 
 
-                    if (enemies[i].IsDead(enemies[i]) == true)
+                    if (enemies[i].IsDead(enemies[i]) == true)//if the enemy is dead we set them to null in the enemies array
                     {
 
                         Console.WriteLine(string.Format("enemy {0} is sentenced for termination by the program.", enemies[i]));
@@ -2750,13 +2736,7 @@ namespace _19338445_GADE_6112_Task_1
 
                         enemies[i] = null;
 
-                        Form1 f1 = new Form1();
-
-                        f1.DeleteEnemy(i);
-
-
-
-
+                        
                     }
 
                 }
